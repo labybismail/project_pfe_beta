@@ -16,6 +16,7 @@ class UserDoctorSeeder extends Seeder
     public function run()
     {
         // Create sample users
+
         $user1 = DB::table('users')->insertGetId([
             'nom' => 'Doe',
             'prenom' => 'John',
@@ -25,6 +26,7 @@ class UserDoctorSeeder extends Seeder
             'cin' => 'JDOE123456',
             'dateNaissance' => Carbon::create('1980', '01', '01'),
             'Sexe' => true,
+            'address' => 'Casablanca',
             'status_compte' => 'A',
             'created_at' => now(),
             'updated_at' => now(),
@@ -39,6 +41,7 @@ class UserDoctorSeeder extends Seeder
             'cin' => 'JSMITH987654',
             'dateNaissance' => Carbon::create('1985', '05', '05'),
             'Sexe' => false,
+            'address' => 'Casablanca',
             'status_compte' => 'A',
             'created_at' => now(),
             'updated_at' => now(),
@@ -47,14 +50,16 @@ class UserDoctorSeeder extends Seeder
         // Create sample doctors
         DB::table('doctors')->insert([
             'user_id' => $user1,
-            'Specialité' => 'Cardiology',
+            'speciality_id' => 4,
+            'prix'=>350,
             'created_at' => now(),
             'updated_at' => now(),
         ]);
 
         DB::table('doctors')->insert([
             'user_id' => $user2,
-            'Specialité' => 'Neurology',
+            'speciality_id' => 2,
+            'prix'=>250,
             'created_at' => now(),
             'updated_at' => now(),
         ]);

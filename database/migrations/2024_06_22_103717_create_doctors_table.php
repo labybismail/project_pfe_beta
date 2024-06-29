@@ -14,9 +14,11 @@ return new class extends Migration
         Schema::create('doctors', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id');
-            $table->string('Specialité');
+            $table->unsignedBigInteger('speciality_id');
             $table->timestamps();
+            $table->integer('prix');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('speciality_id')->references('id')->on('specialities')->onDelete('cascade');
         });
     }
 
@@ -25,6 +27,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // Schema::table('doctors', function (Blueprint $table) {
+        //     $table->dropForeign(['user_id']);
+        //     $table->dropForeign(['speciality_id']);
+        // });
+
         Schema::dropIfExists('doctors');
     }
 };

@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('tel');
             $table->string('password');
             $table->string('cin');
+            $table->string('address');
             $table->date('dateNaissance');
             $table->boolean('Sexe');
             $table->char('status_compte', 1);
@@ -46,8 +47,10 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('users');
-        Schema::dropIfExists('password_reset_tokens');
+         
+
         Schema::dropIfExists('sessions');
+        Schema::dropIfExists('password_reset_tokens');
+        Schema::dropIfExists('users');
     }
 };

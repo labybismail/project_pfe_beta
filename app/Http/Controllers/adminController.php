@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Consultation;
 use App\Models\Doctor;
+use App\Models\Patient;
 use Illuminate\Http\Request;
 
 class adminController extends Controller
@@ -10,17 +12,8 @@ class adminController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
-    {
-        return view('admin.index');
-    }
-    public function doctorsList()
-    {
-        $doctors=Doctor::paginate(10);
-        return view('admin.doctor-list',compact('doctors'));
-    }
-
-    /**
+   
+    /** 
      * Show the form for creating a new resource.
      */
     public function create()

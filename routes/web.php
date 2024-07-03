@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\pagesRedirects;
 use App\Models\Doctor;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
@@ -14,11 +15,16 @@ Route::middleware('guest')->group(function(){
     
 });
 Route::prefix('admin')->group(function(){
-    Route::get('/dashboard', [adminController::class,'index'])->name('admin.index');
-    Route::get('/doctorsList', [adminController::class,'doctorsList'])->name('admin.doctorsList');
+    Route::get('/dashboard', [pagesRedirects::class,'adminIndex'])->name('admin.index');
+    Route::get('/doctorsList', [pagesRedirects::class,'doctorsList'])->name('admin.doctorsList');
+    Route::get('/patientsList', [pagesRedirects::class,'patientsList'])->name('admin.patientsList');
+    Route::get('/consultationsList', [pagesRedirects::class,'consultationsList'])->name('admin.consultationsList');
+    Route::get('/specialitiesList', [pagesRedirects::class,'specialitiesList'])->name('admin.specialitiesList');
+    Route::get('/reviewsList', [pagesRedirects::class,'reviewsList'])->name('admin.reviewsList');
 });
 
 Route::middleware('admin')->group(function(){
+    
 
 });
 Route::middleware('patient')->group(function(){

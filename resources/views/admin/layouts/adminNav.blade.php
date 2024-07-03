@@ -15,13 +15,13 @@
         <i class="fe fe-text-align-left"></i>
     </a>
     
-    <div class="top-nav-search">
+    {{-- <div class="top-nav-search">
         <form>
             <input type="text" class="form-control" placeholder="Search here">
             <button class="btn" type="submit"><i class="fa fa-search"></i></button>
         </form>
     </div>
-    
+     --}}
     <!-- Mobile Menu Toggle -->
     <a class="mobile_btn" id="mobile_btn">
         <i class="fa fa-bars"></i>
@@ -33,10 +33,10 @@
 
         <!-- Notifications -->
         <li class="nav-item dropdown noti-dropdown">
-            <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
+            {{-- <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
                 <i class="fe fe-bell"></i> <span class="badge badge-pill">3</span>
-            </a>
-            <div class="dropdown-menu notifications">
+            </a> --}}
+            {{-- <div class="dropdown-menu notifications">
                 <div class="topnav-dropdown-header">
                     <span class="notification-title">Notifications</span>
                     <a href="javascript:void(0)" class="clear-noti"> Clear All </a>
@@ -100,7 +100,7 @@
                 <div class="topnav-dropdown-footer">
                     <a href="#">View all Notifications</a>
                 </div>
-            </div>
+            </div> --}}
         </li>
         <!-- /Notifications -->
         
@@ -119,8 +119,8 @@
                         <p class="text-muted mb-0">Administrator</p>
                     </div>
                 </div>
-                <a class="dropdown-item" href="profile.html">My Profile</a>
-                <a class="dropdown-item" href="settings.html">Settings</a>
+                {{-- <a class="dropdown-item" href="profile.html">My Profile</a> --}}
+                {{-- <a class="dropdown-item" href="settings.html">Settings</a> --}}
                 <a class="dropdown-item" href="login.html">Logout</a>
             </div>
         </li>

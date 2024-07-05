@@ -150,7 +150,7 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+															<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset('assets/img/doctors/doctor-thumb-01.jpg')}}" alt="User Image"></a>
 															Dr. {{$doctor->user->nom.' '.$doctor->user->prenom}}
 														</h2>
 													</td>
@@ -194,7 +194,7 @@
 													<tr>
 														<td>
 															<h2 class="table-avatar">
-																<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
+																<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset('assets/img/patients/patient1.jpg')}}" alt="User Image"></a>
 																{{$patient->user->nom .' '.$patient->user->prenom}}
 															</h2>
 														</td>
@@ -235,14 +235,14 @@
 													<tr>
 														<td>
 															<h2 class="table-avatar">
-																<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+																<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset('assets/img/doctors/doctor-thumb-01.jpg')}}" alt="User Image"></a>
 																Dr. {{$consultation->doctor->user->nom.' '.$consultation->doctor->user->prenom}}
 															</h2>
 														</td>
 														<td>{{$consultation->doctor->speciality->name}}</td>
 														<td>
 															<h2 class="table-avatar">
-																<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
+																<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{asset('assets/img/patients/patient1.jpg')}}" alt="User Image"></a>
 																{{$consultation->patient->user->nom.' '.$consultation->patient->user->prenom}}
 															</h2>
 														</td>

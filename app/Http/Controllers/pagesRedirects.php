@@ -46,4 +46,17 @@ class pagesRedirects extends Controller
         $reviews=Review::paginate(10);
         return view('admin.reviews',compact('reviews'));
     }
+    public function login()
+    {
+        return view('login');
+    }
+    public function register()
+    {
+        return view('register');
+    }
+    public function doctorsListAdd()
+    {
+        $specialities=Speciality::orderBy('name')->get();
+        return view('admin.doctor-add',compact('specialities'));
+    }
 }

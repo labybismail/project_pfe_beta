@@ -1,35 +1,67 @@
 <?php
 
-use App\Http\Controllers\pagesRedirects;
-use App\Models\Doctor;
+use App\Http\Controllers\specialitiesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
-use App\Http\Controllers\adminController;
+use App\Http\Controllers\pagesRedirects;
+use App\Http\Controllers\loginController;
 use App\Http\Controllers\doctorController;
+use App\Http\Controllers\ProfileController;
 
 
-Route::middleware('guest')->group(function(){
-    Route::get('/', [homeController::class,'home'])->name('home');
-    
-    Route::get('doctor/{id}',[doctorController::class,'show'])->name('doctorProfile');
-    
+// Route::middleware('isNotAdmin')->group(function () {
+// });
+
+Route::get('/', [homeController::class, 'home'])->name('home');
+
+Route::get('doctor/{id}', [doctorController::class, 'show'])->name('doctorProfile');
+
+Route::middleware('isGuest')->group(function () {
+
+    Route::get('/login', [pagesRedirects::class, 'login'])->name('login');
+    Route::post('/login', [loginController::class, 'loginAttempt'])->name('loginAttempt');
+    Route::get('/register', [pagesRedirects::class, 'register'])->name('register');
+    Route::POST('/register', [loginController::class, 'register'])->name('registerAttempt');
 });
-Route::prefix('admin')->group(function(){
-    Route::get('/dashboard', [pagesRedirects::class,'adminIndex'])->name('admin.index');
-    Route::get('/doctorsList', [pagesRedirects::class,'doctorsList'])->name('admin.doctorsList');
-    Route::get('/patientsList', [pagesRedirects::class,'patientsList'])->name('admin.patientsList');
-    Route::get('/consultationsList', [pagesRedirects::class,'consultationsList'])->name('admin.consultationsList');
-    Route::get('/specialitiesList', [pagesRedirects::class,'specialitiesList'])->name('admin.specialitiesList');
-    Route::get('/reviewsList', [pagesRedirects::class,'reviewsList'])->name('admin.reviewsList');
+
+Route::middleware('isLogged')->group(function () {
+    Route::middleware('isAdmin')->group(function () {
+        Route::prefix('admin')->group(function () {
+            Route::get('/dashboard', [pagesRedirects::class, 'adminIndex'])->name('admin.index');
+            Route::get('/doctorsList', [pagesRedirects::class, 'doctorsList'])->name('admin.doctorsList');
+            Route::get('doctorsListAdd/add', [pagesRedirects::class, 'doctorsListAdd'])->name('admin.doctorsListAdd');
+            Route::get('/patientsList', [pagesRedirects::class, 'patientsList'])->name('admin.patientsList');
+            Route::get('/consultationsList', [pagesRedirects::class, 'consultationsList'])->name('admin.consultationsList');
+            Route::get('/specialitiesList', [pagesRedirects::class, 'specialitiesList'])->name('admin.specialitiesList');
+            Route::get('/reviewsList', [pagesRedirects::class, 'reviewsList'])->name('admin.reviewsList');
+            Route::prefix('speciality')->group(function(){
+                Route::post('/store',[specialitiesController::class,'store'])->name('speciality.store');
+                Route::delete('/{id}',[specialitiesController::class,'destroy'])->name('speciality.destroy');
+                Route::post('/',[specialitiesController::class,'update'])->name('speciality.update');
+                Route::post('/get_edit_fields',[specialitiesController::class,'get_edit_fields'])->name('speciality.get_edit_fields');
+            });
+        });
+    });
+    Route::get('logout', function () {
+        session()->forget('user');
+        session()->forget('isLogged');
+        return redirect()->route('home');
+    })->name('logout');
+
 });
 
-Route::middleware('admin')->group(function(){
-    
+// Route::middleware('admin')->group(function(){
 
-});
-Route::middleware('patient')->group(function(){
 
-});
-Route::middleware('doctor')->group(function(){
+// });
+// Route::middleware('patient')->group(function(){
 
+// });
+// Route::middleware('doctor')->group(function(){
+
+// });
+
+
+Route::fallback(function () {
+    return view('error-404');
 });

@@ -122,7 +122,8 @@
 							</div>
 							<div class="category-content">
 								<h4>{{$speciality->name}}</h4>
-								<span>@php
+								<span>
+									@php
 										echo \App\Models\Doctor::where('speciality_id',$speciality->id)->count().' Doctors';
 									@endphp
 								</span>

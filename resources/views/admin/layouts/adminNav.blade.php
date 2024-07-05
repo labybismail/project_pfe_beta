@@ -3,10 +3,10 @@
     <!-- Logo -->
     <div class="header-left">
         <a href="{{route('admin.index')}}" class="logo">
-            <img src="assets/img/logo.png" alt="Logo">
+            <img src="{{asset('assets/img/logo.png')}}" alt="Logo">
         </a>
         <a href="{{route('admin.index')}}" class="logo logo-small">
-            <img src="assets/img/logo-small.png" alt="Logo" width="30" height="30">
+            <img src="{{asset('assets/img/logo-small.png')}}" alt="Logo" width="30" height="30">
         </a>
     </div>
     <!-- /Logo -->
@@ -112,16 +112,16 @@
             <div class="dropdown-menu">
                 <div class="user-header">
                     <div class="avatar avatar-sm">
-                        <img src="assets/img/profiles/avatar-01.jpg" alt="User Image" class="avatar-img rounded-circle">
+                        <img src="{{asset('assets/img/profiles/avatar-01.jpg')}}" alt="User Image" class="avatar-img rounded-circle">
                     </div>
                     <div class="user-text">
-                        <h6>Ryan Taylor</h6>
+                        <h6>{{session()->get('user')->nom.' '.session()->get('user')->prenom}}</h6>
                         <p class="text-muted mb-0">Administrator</p>
                     </div>
                 </div>
                 {{-- <a class="dropdown-item" href="profile.html">My Profile</a> --}}
                 {{-- <a class="dropdown-item" href="settings.html">Settings</a> --}}
-                <a class="dropdown-item" href="login.html">Logout</a>
+                <a class="dropdown-item" href="{{route('logout')}}">Logout</a>
             </div>
         </li>
         <!-- /User Menu -->

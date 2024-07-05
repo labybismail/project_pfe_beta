@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('cin');
             $table->string('address');
             $table->date('dateNaissance');
-            $table->boolean('Sexe');
+            $table->char('Sexe',1);
             $table->char('status_compte', 1);
             $table->timestamps();
         });

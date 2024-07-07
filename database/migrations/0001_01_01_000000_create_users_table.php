@@ -23,6 +23,7 @@ return new class extends Migration
             $table->date('dateNaissance');
             $table->char('Sexe',1);
             $table->char('status_compte', 1);
+            $table->string('profile_picture', 100);
             $table->timestamps();
         });
 

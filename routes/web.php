@@ -6,13 +6,9 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\pagesRedirects;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\doctorController;
-use App\Http\Controllers\ProfileController;
 
 
-// Route::middleware('isNotAdmin')->group(function () {
-// });
-
-Route::get('/', [homeController::class, 'home'])->name('home');
+Route::get('/', [homeController::class, 'home'])->name('home')->middleware('isNotAdmin');
 
 Route::get('doctor/{id}', [doctorController::class, 'show'])->name('doctorProfile');
 
@@ -29,16 +25,23 @@ Route::middleware('isLogged')->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/dashboard', [pagesRedirects::class, 'adminIndex'])->name('admin.index');
             Route::get('/doctorsList', [pagesRedirects::class, 'doctorsList'])->name('admin.doctorsList');
-            Route::get('doctorsListAdd/add', [pagesRedirects::class, 'doctorsListAdd'])->name('admin.doctorsListAdd');
+            Route::prefix('doctorsListAdd')->group(function () {
+                Route::get('add', [pagesRedirects::class, 'doctorsListAdd'])->name('admin.doctorsListAdd');
+                Route::post('add', [doctorController::class, 'store'])->name('admin.doctorsListstore');
+                Route::delete('{id}', [doctorController::class, 'destroy'])->name('admin.deleteDoctor');
+                Route::get('/edit/{id}', [doctorController::class, 'edit'])->name('admin.deleteEdit');
+                Route::put('/edit/{id}', [doctorController::class, 'update'])->name('admin.doctorsListUpdate');
+            });
+
             Route::get('/patientsList', [pagesRedirects::class, 'patientsList'])->name('admin.patientsList');
             Route::get('/consultationsList', [pagesRedirects::class, 'consultationsList'])->name('admin.consultationsList');
             Route::get('/specialitiesList', [pagesRedirects::class, 'specialitiesList'])->name('admin.specialitiesList');
             Route::get('/reviewsList', [pagesRedirects::class, 'reviewsList'])->name('admin.reviewsList');
-            Route::prefix('speciality')->group(function(){
-                Route::post('/store',[specialitiesController::class,'store'])->name('speciality.store');
-                Route::delete('/{id}',[specialitiesController::class,'destroy'])->name('speciality.destroy');
-                Route::post('/',[specialitiesController::class,'update'])->name('speciality.update');
-                Route::post('/get_edit_fields',[specialitiesController::class,'get_edit_fields'])->name('speciality.get_edit_fields');
+            Route::prefix('speciality')->group(function () {
+                Route::post('/store', [specialitiesController::class, 'store'])->name('speciality.store');
+                Route::delete('/{id}', [specialitiesController::class, 'destroy'])->name('speciality.destroy');
+                Route::post('/', [specialitiesController::class, 'update'])->name('speciality.update');
+                Route::post('/get_edit_fields', [specialitiesController::class, 'get_edit_fields'])->name('speciality.get_edit_fields');
             });
         });
     });
@@ -49,17 +52,6 @@ Route::middleware('isLogged')->group(function () {
     })->name('logout');
 
 });
-
-// Route::middleware('admin')->group(function(){
-
-
-// });
-// Route::middleware('patient')->group(function(){
-
-// });
-// Route::middleware('doctor')->group(function(){
-
-// });
 
 
 Route::fallback(function () {

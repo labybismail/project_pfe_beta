@@ -3,7 +3,7 @@
 
 
 <head>
-    
+
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
     <title>Doccure - Specialities Page</title>
@@ -95,14 +95,14 @@
                                                     <td>
                                                         <h2 class="table-avatar">
                                                             {{-- <a href="profile.html" class="avatar avatar-sm mr-2"> --}}
-																<img class="avatar-img" width="50"
-																src="{{ asset('assets/img/specialities/' . $speciality->name . '.png') }}"
-																onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.jpg') }}';"
-																onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.jpeg') }}';"
-																onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.gif') }}';"
-																onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/default-speciality.png') }}';"
-																alt="Speciality">
-															
+                                                            <img class="avatar-img" width="50"
+                                                                src="{{ asset('assets/img/specialities/' . $speciality->name . '.png') }}"
+                                                                onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.jpg') }}';"
+                                                                onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.jpeg') }}';"
+                                                                onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/' . $speciality->name . '.gif') }}';"
+                                                                onerror="this.onerror=null; this.src='{{ asset('assets/img/specialities/default-speciality.png') }}';"
+                                                                alt="Speciality">
+
                                                             &nbsp;{{ $speciality->name }}
                                                         </h2>
                                                     </td>
@@ -110,20 +110,27 @@
                                                     <td class="text-right">
                                                         <div class="actions">
                                                             <a class="btn btn-sm bg-success-light" data-toggle="modal"
-                                                            href="#edit_specialities_details"
-                                                            data-id="{{ $speciality->id }}" 
-                                                            data-name="{{ $speciality->name }}" onclick="getEditFields({{ $speciality->id }})">
-                                                            <i class="fe fe-pencil"></i> Edit
-                                                        </a>
-                                                            <a data-toggle="modal" onclick="if(!confirm('Are you sure you want to delete this speciality?')){return false;}else{$('#formDelete{{$speciality->id}}').submit()}"  
+                                                                href="#edit_specialities_details"
+                                                                data-id="{{ $speciality->id }}"
+                                                                data-name="{{ $speciality->name }}"
+                                                                onclick="getEditFields({{ $speciality->id }})">
+                                                                <i class="fe fe-pencil"></i> Edit
+                                                            </a>
+                                                            <a data-toggle="modal"
+                                                                onclick="if(!confirm('Are you sure you want to delete this speciality?')){return false;}else{$('#formDelete{{ $speciality->id }}').submit()}"
                                                                 class="btn btn-sm bg-danger-light">
 
 
-                                                                <form id="formDelete{{$speciality->id}}" action="{{route('speciality.destroy',$speciality->id)}}" method="post">
+                                                                <form id="formDelete{{ $speciality->id }}"
+                                                                    action="{{ route('speciality.destroy', $speciality->id) }}"
+                                                                    method="post">
                                                                     @method('delete')
                                                                     @csrf
                                                                     <i class="fe fe-trash"></i> Delete
-                                                                    <input type="submit" id="suppBtn" style="display: none"  onclick="if(!confirm('Are you sure you want to delete this speciality?')){return false;} " value="">
+                                                                    <input type="submit" id="suppBtn"
+                                                                        style="display: none"
+                                                                        onclick="if(!confirm('Are you sure you want to delete this speciality?')){return false;} "
+                                                                        value="">
                                                                 </form>
 
                                                             </a>
@@ -190,7 +197,8 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <form action="{{ route('speciality.update') }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('speciality.update') }}" method="POST"
+                            enctype="multipart/form-data">
                             @csrf
                             {{-- @method('PUT') --}}
                             <div id="content_js"></div>
@@ -201,25 +209,25 @@
             </div>
         </div>
         <script>
-
             function getEditFields(idSpeciality) {
-                var csrfToken ='{{ csrf_token() }}';
+                var csrfToken = '{{ csrf_token() }}';
                 $.ajax({
-                url: '{{route('speciality.get_edit_fields')}}',
-                type: 'POST',
-                data: {id:idSpeciality,
-                    _token: csrfToken,
-                },
-                success: function(response) {
-                    $('#content_js').html(response);
-                },
-                error: function(xhr) {
-                    alert('An error occurred while updating the speciality');
-                }
-            })
-        }
+                    url: '{{ route('speciality.get_edit_fields') }}',
+                    type: 'POST',
+                    data: {
+                        id: idSpeciality,
+                        _token: csrfToken,
+                    },
+                    success: function(response) {
+                        $('#content_js').html(response);
+                    },
+                    error: function(xhr) {
+                        alert('An error occurred while updating the speciality');
+                    }
+                })
+            }
         </script>
-        
+
         <!-- /Edit Details Modal -->
 
         <!-- Delete Modal -->
@@ -243,8 +251,8 @@
                 </div>
             </div>
         </div> --}}
-	
-		
+
+
         <!-- /Delete Modal -->
     </div>
 

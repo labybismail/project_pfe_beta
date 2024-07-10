@@ -71,7 +71,8 @@ class doctorController extends Controller
             'password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()],
             'speciality' => 'required|exists:specialities,id',
             'appointment_price' => 'required|numeric|min:0',
-            'profile_picture' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048'
+            'profile_picture' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
+            'ville' => 'required|exists:villes,id'
 
         ]);
 
@@ -89,6 +90,7 @@ class doctorController extends Controller
             $user->sexe = $request->gender;
             $user->dateNaissance = $request->dateNaissance;
             $user->status_compte = 'A';
+            $user->ville = $request->ville;
             $user->save();
             if ($request->hasFile('profile_picture')) {
                 $file = $request->file('profile_picture');
@@ -163,6 +165,8 @@ class doctorController extends Controller
             'appointment_price' => 'required|numeric|min:0',
             'profile_picture' => 'nullable|image|max:2048',
             'status' => 'required|in:A,I',
+            'ville' => 'required|exists:villes,id'
+
         ]);
 
         try {
@@ -180,6 +184,7 @@ class doctorController extends Controller
             $user->dateNaissance = $request->input('dateNaissance');
             $user->address = $request->input('address');
             $user->status_compte = $request->input('status');
+            $user->ville = $request->input('ville');
             if ($request->filled('password')) {
                 $user->password = bcrypt($request->input('password'));
             }

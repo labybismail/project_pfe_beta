@@ -185,8 +185,17 @@
 									<div class="row row-sm">
 										<div class="col-6">	<a href="{{route('doctorProfile',$doctor->id)}}" class="btn view-btn">View Profile</a>
 										</div>
-										<div class="col-6">	<a href="booking.html" class="btn book-btn">Book Now</a>
+										@if(
+										 	session()->has('user') 
+										&&
+											!App\Models\Admin::where('user_id',session()->get('user')->id)->exists()  
+										&&
+										  	!App\Models\Doctor::where('user_id',session()->get('user')->id)->exists() 
+										)
+										<div class="col-6">	
+											<a href="booking.html" class="btn book-btn">Book Now</a>
 										</div>
+										@endif
 									</div>
 								</div>
 							</div>

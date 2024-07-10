@@ -162,7 +162,21 @@
                                                 @enderror
                                                 <div class="invalid-feedback"></div>
                                             </div>
-                                            <div class="col-md-6 form-group form-focus">
+                                            <div class="col-md-3 form-group form-focus">
+                                                <select name="ville" id=""
+                                                    class="form-control floating">
+                                                    @foreach ($villes as $ville)
+                                                    <option value="{{ $ville->id }}" {{ old('ville') == $ville->id ? 'selected' : '' }}>{{ $ville->name }}</option>
+                                                      </option>
+                                                    @endforeach
+                                                </select>
+                                                <label class="focus-label">ville</label>
+                                                @error('ville')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="col-md-3 form-group form-focus">
                                                 <select name="speciality" id=""
                                                     class="form-control floating">
                                                     @foreach ($specialities as $speciality)

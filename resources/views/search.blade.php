@@ -123,22 +123,18 @@
 
                     <div class="col-md-12 col-lg-8 col-xl-9">
                         @php
-                        function doctorProfileImage($nom, $prenom)
-                        {
-                            $extensions = ['jpg', 'jpeg', 'png', 'gif'];
-                            foreach ($extensions as $ext) {
-                                $filename = public_path(
-                                    "storage/doctors/{$nom}_{$prenom}.{$ext}",
-                                );
-                                if (file_exists($filename)) {
-                                    return asset(
-                                        "storage/doctors/{$nom}_{$prenom}.{$ext}",
-                                    );
+                            function doctorProfileImage($nom, $prenom)
+                            {
+                                $extensions = ['jpg', 'jpeg', 'png', 'gif'];
+                                foreach ($extensions as $ext) {
+                                    $filename = public_path("storage/doctors/{$nom}_{$prenom}.{$ext}");
+                                    if (file_exists($filename)) {
+                                        return asset("storage/doctors/{$nom}_{$prenom}.{$ext}");
+                                    }
                                 }
+                                return asset('storage/doctors/default.jpg');
                             }
-                            return asset('storage/doctors/default.jpg');
-                        }
-                    @endphp
+                        @endphp
                         <!-- Doctor Widget -->
                         @foreach ($doctors as $doctor)
                             <div class="card">
@@ -146,14 +142,15 @@
                                     <div class="doctor-widget">
                                         <div class="doc-info-left">
                                             <div class="doctor-img">
-                                                <a href="{{route('doctorProfile',$doctor->id)}}">
-                                                  
-                                                    <img src="{{doctorProfileImage($doctor->user->nom, $doctor->user->prenom)}}" class="img-fluid"
-                                                        alt="User Image">
+                                                <a href="{{ route('doctorProfile', $doctor->id) }}">
+
+                                                    <img src="{{ doctorProfileImage($doctor->user->nom, $doctor->user->prenom) }}"
+                                                        class="img-fluid" alt="User Image">
                                                 </a>
                                             </div>
                                             <div class="doc-info-cont">
-                                                <h4 class="doc-name"><a href="{{route('doctorProfile',$doctor->id)}}">Dr.
+                                                <h4 class="doc-name"><a
+                                                        href="{{ route('doctorProfile', $doctor->id) }}">Dr.
                                                         {{ $doctor->user->nom . ' ' . $doctor->user->prenom }}</a>
                                                 </h4>
                                                 <p class="doc-speciality">{{ $doctor->speciality->name }}</p>
@@ -214,14 +211,25 @@
                                                 <ul>
                                                     {{-- <li><i class="far fa-thumbs-up"></i> 98%</li> --}}
                                                     {{-- <li><i class="far fa-comment"></i> 17 Feedback</li> --}}
-                                                    <li><i class="fas fa-map-marker-alt"></i>{{$doctor->user->address.', '.$doctor->user->ville->name }}, morocco</li>
-                                                    <li><i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH</li>
+                                                    <li><i
+                                                            class="fas fa-map-marker-alt"></i>{{ $doctor->user->address . ', ' . $doctor->user->ville->name }},
+                                                        morocco</li>
+                                                    <li><i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH
+                                                    </li>
                                                 </ul>
                                             </div>
                                             <div class="clinic-booking">
-                                                <a class="view-pro-btn" href="{{route('doctorProfile',$doctor->id)}}">View Profile</a>
-                                                <a class="apt-btn" href="booking.html">Book Appointment</a>
-                                            </div>
+                                                <a class="view-pro-btn"
+                                                    href="{{ route('doctorProfile', $doctor->id) }}">View
+                                                    Profile</a>
+                                            @if (session()->has('user') &&
+                                                    !App\Models\Admin::where('user_id', session()->get('user')->id)->exists() &&
+                                                    !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
+                                               
+                                                    <a class="apt-btn" href="booking.html">Book Appointment</a>
+                                            @endif
+                                        </div>
+
                                         </div>
                                     </div>
                                 </div>

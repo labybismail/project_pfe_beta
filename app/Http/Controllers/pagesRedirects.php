@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Ville;
 use App\Models\Doctor;
-use App\Models\Patient;
-use App\Models\Consultation;
 use App\Models\Review;
+use App\Models\Patient;
 use App\Models\Speciality;
+use App\Models\Consultation;
 use Illuminate\Http\Request;
 
 class pagesRedirects extends Controller
@@ -52,11 +53,14 @@ class pagesRedirects extends Controller
     }
     public function register()
     {
-        return view('register');
+        $villes=Ville::orderBy('name')->get();
+
+        return view('register',compact('villes'));
     }
     public function doctorsListAdd()
     {
         $specialities=Speciality::orderBy('name')->get();
-        return view('admin.doctor-add',compact('specialities'));
+        $villes=Ville::orderBy('name')->get();
+        return view('admin.doctor-add',compact('specialities','villes'));
     }
 }

@@ -145,7 +145,10 @@
                                         <i class="fas fa-video"></i>
                                     </a>
                                 </div> --}}
-                                @if(auth()->check())
+                                @if (session()->has('user') &&
+                                                    !App\Models\Admin::where('user_id', session()->get('user')->id)->exists() &&
+                                                    !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
+                                               
                                 <div class="clinic-booking">
                                     <a class="apt-btn" href="booking.html">Book Appointment</a>
                                 </div>

@@ -20,7 +20,7 @@ Route::middleware('isGuest')->group(function () {
     Route::get('/login', [pagesRedirects::class, 'login'])->name('login');
     Route::post('/login', [loginController::class, 'loginAttempt'])->name('loginAttempt');
     Route::get('/register', [pagesRedirects::class, 'register'])->name('register');
-    Route::POST('/register', [loginController::class, 'register'])->name('registerAttempt');
+    Route::POST('/register', [loginController::class, 'registerAttempt'])->name('registerAttempt');
 });
 
 Route::middleware('isLogged')->group(function () {

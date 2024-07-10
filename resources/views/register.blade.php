@@ -116,7 +116,7 @@
 											</div>
 										</div>
 										<div class="row">
-											<div class="col-md-12 form-group form-focus">
+											<div class="col-md-6 form-group form-focus">
 												<input type="text" class="form-control floating" autocomplete="off" name="address" required oninput="validateInput(this)">
 												<label class="focus-label" style="padding-left:6px">Address</label>
 												@error('address')
@@ -124,7 +124,21 @@
 												@enderror
 												<div class="invalid-feedback"></div>
 											</div>
-										</div>
+											<div class="col-md-6 form-group form-focus">
+                                                <select name="ville" id=""
+                                                    class="form-control floating">
+                                                    @foreach ($villes as $ville)
+                                                    <option value="{{ $ville->id }}" {{ old('ville') == $ville->id ? 'selected' : '' }}>{{ $ville->name }}</option>
+                                                      </option>
+                                                    @endforeach
+                                                </select>
+                                                <label class="focus-label">ville</label>
+                                                @error('ville')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+										</div> 
 										<div class="row">
 											<div class="col-md-6 form-group form-focus">
 												<select class="form-control floating" autocomplete="off" name="gender" required oninput="validateInput(this)">

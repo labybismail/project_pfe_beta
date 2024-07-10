@@ -19,8 +19,8 @@ class SpecialtiesSeeder extends Seeder
             ['name' => 'Urology'],
             ['name' => 'Neurology'],
             ['name' => 'Orthopedic'],
-            ['name' => 'Cardiologist'],
-            ['name' => 'Dentist']
+            ['name' => 'Cardiology'],
+            ['name' => 'Dentistry']
         ];
 
         // Loop through the specialties array and create records

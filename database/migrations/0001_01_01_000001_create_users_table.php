@@ -20,11 +20,14 @@ return new class extends Migration
             $table->string('password');
             $table->string('cin');
             $table->string('address');
+            $table->unsignedBigInteger('ville_id')->nullable();
             $table->date('dateNaissance');
             $table->char('Sexe',1);
             $table->char('status_compte', 1);
-            $table->string('profile_picture', 100);
+            $table->string('profile_picture', 100)->nullable();
             $table->timestamps();
+            $table->foreign('ville_id')->references('id')->on('villes')->onDelete('cascade');
+
         });
 
         Schema::create('password_reset_tokens', function (Blueprint $table) {

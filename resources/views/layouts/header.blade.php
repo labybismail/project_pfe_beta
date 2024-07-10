@@ -1,5 +1,5 @@
 <header class="header">
-    <nav class="navbar navbar-expand-lg header-nav nav-transparent">
+    <nav class="navbar navbar-expand-lg header-nav nav-transparent ">
         <div class="navbar-header">
             <a id="mobile_btn" href="javascript:void(0);">
                 <span class="bar-icon">
@@ -8,6 +8,12 @@
                     <span></span>
                 </span>
             </a>
+            <form class="formHeaderSearch" action="{{route('searchDoctor')}}" method="POST">
+                @csrf
+                <input type="hidden" name="ville" value="">
+                <input type="hidden" name="gender" value="">
+                <input type="hidden" name="speciality" value="">
+            </form>
             <a href="{{ route('home') }}" class="navbar-brand logo">
                 <img src="{{ asset('assets/img/logo.png') }}" class="img-fluid" alt="Logo">
             </a>
@@ -21,7 +27,15 @@
                     <i class="fas fa-times"></i>
                 </a>
             </div>
-            <ul class="main-nav white-font">
+            @if(request()->is('searchDoctor'))
+
+            <style>
+                header nav ul li a {
+                    color: black !important;
+                }
+            </style>
+            @endif
+                <ul class="main-nav white-font">
                 <li class="has-submenu active">
                     <a href="{{ route('home') }}">Home</a>
                 </li>
@@ -40,7 +54,7 @@
                     </li>
                 @elseif(session()->has('user') && \App\Models\Patient::where('user_id', session()->get('user')->id)->exists())
                     <li>
-                        <a href="search.php">Search Doctors</a>
+                        <a style="cursor: pointer" onclick="$('.formHeaderSearch').submit()">Search Doctors</a>
                     </li>
                     <li>
                         <a href="calendar.php">Calendar</a>
@@ -57,7 +71,7 @@
                     </li>
                 @else
                     <li>
-                        <a href="search.php">Search Doctors</a>
+                        <a style="cursor: pointer" onclick="$('.formHeaderSearch').submit()">Search Doctors</a>
                     </li>
                 @endif
 

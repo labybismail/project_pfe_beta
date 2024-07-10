@@ -21,7 +21,31 @@ class doctorController extends Controller
     {
         //
     }
+    public function searchDoctor(Request $request)
+    {
+        $villeID = $request->input('ville');
+        $genderID = $request->input('gender');
+        $specialityID = $request->input('speciality');
 
+        $query = Doctor::query()
+        ->join('users', 'users.id', '=', 'doctors.user_id');
+    
+    if ($specialityID != '') {
+        $query->where('doctors.speciality_id', $specialityID);
+    }
+    
+    if ($villeID != '') {
+        $query->where('users.ville_id', $villeID);
+    }
+    
+    if ($genderID != '') {
+        $query->where('users.sexe', $genderID);
+    }
+    
+    $doctors = $query->select('doctors.*', 'users.*')->get();
+        $specialities = Speciality::orderBy('Name')->get();
+        return view('search', compact('doctors', 'specialities', 'genderID', 'specialityID', 'villeID'));
+    }
     /**
      * Show the form for creating a new resource.
      */
@@ -113,10 +137,10 @@ class doctorController extends Controller
      */
     public function edit(string $id)
     {
-        $doctor=Doctor::find($id);
+        $doctor = Doctor::find($id);
         $specialities = Speciality::all();
 
-        return view('admin.doctor-edit',compact('doctor','specialities'));
+        return view('admin.doctor-edit', compact('doctor', 'specialities'));
     }
 
     /**
@@ -137,14 +161,14 @@ class doctorController extends Controller
             'address' => 'required|string|max:255',
             'speciality' => 'required|exists:specialities,id',
             'appointment_price' => 'required|numeric|min:0',
-            'profile_picture' => 'nullable|image|max:2048',  
-            'status' => 'required|in:A,I',  
+            'profile_picture' => 'nullable|image|max:2048',
+            'status' => 'required|in:A,I',
         ]);
 
         try {
             // Find the doctor
             $doctor = Doctor::findOrFail($id);
-            
+
             // Update user information
             $user = $doctor->user;
             $user->prenom = $request->input('first_name');
@@ -159,14 +183,14 @@ class doctorController extends Controller
             if ($request->filled('password')) {
                 $user->password = bcrypt($request->input('password'));
             }
-            
+
             // Save user
-            
+
             // Update doctor information
-            
+
             $doctor->speciality_id = $request->input('speciality');
             $doctor->prix = $request->input('appointment_price');
-            
+
             // Handle profile picture upload if provided
             // if ($request->hasFile('profile_picture')) {
             //     $image = $request->file('profile_picture');
@@ -180,7 +204,7 @@ class doctorController extends Controller
                 $filePath = 'doctors/' . $fileName; // Path inside storage/app/public
                 $oldFileName = $user->nom . '_' . $user->prenom; // Old file name without extension
                 $oldFilePath = 'doctors/' . $oldFileName; // Old file path
-    
+
                 if (Storage::disk('public')->exists($oldFilePath)) {
                     Storage::disk('public')->delete($oldFilePath);
                 }

@@ -41,30 +41,38 @@
 					<div class="col-md-6 search-doctor">
 						<div class="search-area">
 							<h2 class="text-center">Search Doctor, Make an Appointment</h2>
-							<form class="search-input">
+							<form class="search-input" action="{{route('searchDoctor')}}" method="POST">
+								@csrf
 								<div class="row">
 									<div class="col-12 col-md-12">
 										<div class="form-group">
 											<label>Location</label>
-											<input type="text" class="form-control" value="">
+											<select class="form-control" name="ville">
+												<option selected value="" >Select city</option>
+												@foreach($villes as $ville)
+													<option value="{{$ville->id}}">{{$ville->name}}</option>
+												@endforeach
+											</select>
 										</div>
 									</div>
 									<div class="col-12 col-md-12">
 										<div class="form-group">
 											<label>Gender</label>
-											<select class="form-control">
-												<option>Male</option>
-												<option>Fe Male</option>
+											<select class="form-control" name="gender">
+												<option selected value="" >Select gender</option>
+												<option value="M">Male</option>
+												<option value="F">Female</option>
 											</select>
 										</div>
 									</div>
 									<div class="col-12 col-md-12">
 										<div class="form-group">
 											<label>Department</label>
-											<select class="form-control">
-												<option>Surgen</option>
-												<option>Cardiologist</option>
-												<option>Gynacologist</option>
+											<select class="form-control" name="speciality">
+												<option selected value="" >Select speciality</option>
+												@foreach($specialities as $speciality)
+													<option value="{{$speciality->id}}">{{$speciality->name}}</option>
+												@endforeach
 											</select>
 										</div>
 									</div>
@@ -149,7 +157,7 @@
 							@foreach($doctors as $doctor)
 							<div class="profile-widget">
 								<div class="doc-img">
-									<a href="doctor-profile.html">
+									<a href="#">
 										<img class="img-fluid" alt="User Image" src="assets/img/doctors/doctor-01.jpg">
 									</a>
 									<a href="javascript:void(0)" class="fav-btn">	<i class="far fa-bookmark"></i>
@@ -157,7 +165,7 @@
 								</div>
 								<div class="pro-content">
 									<h3 class="title">
-											<a href="doctor-profile.html">{{$doctor->user->nom.' '.$doctor->user->prenom}}</a> 
+											<a href="#">{{$doctor->user->nom.' '.$doctor->user->prenom}}</a> 
 											<i class="fas fa-check-circle verified"></i>
 										</h3>
 									<p class="speciality">{{$doctor->speciality->name}}</p>

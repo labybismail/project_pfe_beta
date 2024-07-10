@@ -8,10 +8,13 @@ use App\Http\Controllers\loginController;
 use App\Http\Controllers\doctorController;
 
 
-Route::get('/', [homeController::class, 'home'])->name('home')->middleware('isNotAdmin');
 
 Route::get('doctor/{id}', [doctorController::class, 'show'])->name('doctorProfile');
 
+Route::middleware('isNotAdmin')->group(function () {
+    Route::get('/', [homeController::class, 'home'])->name('home');
+    Route::post('/searchDoctor',[doctorController::class,'searchDoctor'])->name('searchDoctor');
+});
 Route::middleware('isGuest')->group(function () {
 
     Route::get('/login', [pagesRedirects::class, 'login'])->name('login');

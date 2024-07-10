@@ -16,7 +16,7 @@ class isAdmin
      */
     public function handle(Request $request, Closure $next): Response
     {
-        if(!Admin::where('user_id',session()->get('user')->id)->exists()){
+        if(session()->has('user') && !Admin::where('user_id',session()->get('user')->id)->exists()){
             return redirect()->route('home');
         }
         return $next($request);

@@ -1,11 +1,12 @@
 <?php
 
-use App\Http\Controllers\specialitiesController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\pagesRedirects;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\doctorController;
+use App\Http\Controllers\BookingController;
+use App\Http\Controllers\specialitiesController;
 
 
 
@@ -22,7 +23,11 @@ Route::middleware('isGuest')->group(function () {
     Route::get('/register', [pagesRedirects::class, 'register'])->name('register');
     Route::POST('/register', [loginController::class, 'registerAttempt'])->name('registerAttempt');
 });
+Route::middleware('isPatient')->group(function () {
+    Route::post('/booking', [BookingController::class, 'bookingPage'])->name('bookingPage');
+    Route::POST('/book', [BookingController::class, 'store'])->name('book.store');
 
+});
 Route::middleware('isLogged')->group(function () {
     Route::middleware('isAdmin')->group(function () {
         Route::prefix('admin')->group(function () {

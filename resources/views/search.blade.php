@@ -211,22 +211,33 @@
                                                 <ul>
                                                     {{-- <li><i class="far fa-thumbs-up"></i> 98%</li> --}}
                                                     {{-- <li><i class="far fa-comment"></i> 17 Feedback</li> --}}
-                                                    <li><i
-                                                            class="fas fa-map-marker-alt"></i>{{ $doctor->user->address . ', ' . $doctor->user->ville->name }},
+                                                    <li><i class="fas fa-map-marker-alt"></i>{{ $doctor->user->address . ', ' . $doctor->user->ville->name }},
                                                         morocco</li>
                                                     <li><i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH
                                                     </li>
                                                 </ul>
                                             </div>
                                             <div class="clinic-booking">
-                                                <a class="view-pro-btn"
-                                                    href="{{ route('doctorProfile', $doctor->id) }}">View
-                                                    Profile</a>
-                                            @if (session()->has('user') &&
+                                                <a class="view-pro-btn" href="{{ route('doctorProfile', $doctor->id) }}">View Profile</a>
+                                            @if (
+                                                    session()->has('user') &&
                                                     !App\Models\Admin::where('user_id', session()->get('user')->id)->exists() &&
-                                                    !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
+                                                    !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists()
+                                                )
                                                
-                                                    <a class="apt-btn" href="booking.html">Book Appointment</a>
+                                                    
+                                               <form action="{{ route('bookingPage') }}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="doctorID"
+                                                    value="{{ $doctor->id }}">
+                                                <style>
+                                                    .book:hover{
+                                                        background-color:white;
+                                                        color:#0cccf3;
+                                                    }
+                                                </style>
+                                                    <button type="submit" class="book btn btn-info w-100 mt-2" >Book Appointment</button>
+                                               </form>
                                             @endif
                                         </div>
 

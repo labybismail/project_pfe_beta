@@ -13,16 +13,13 @@ return new class extends Migration
     {
         Schema::create('consultations', function (Blueprint $table) {
             $table->id();
-            $table->decimal('dateRdv',8,0); 
-            $table->decimal('heureRdv',6,0);
+            $table->date('dateRdv'); 
+            $table->time('heureRdv');
             $table->unsignedBigInteger('patientId');
             $table->unsignedBigInteger('doctorId');
-
-            
             $table->foreign('patientId')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('doctorId')->references('id')->on('doctors')->onDelete('cascade');
             $table->timestamps();
-
         });
     }
 

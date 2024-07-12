@@ -62,5 +62,14 @@ class pagesRedirects extends Controller
         $specialities=Speciality::orderBy('name')->get();
         $villes=Ville::orderBy('name')->get();
         return view('admin.doctor-add',compact('specialities','villes'));
+    }   
+    public function patientDashboard(){
+        $consultations=Consultation::orderBy('dateRdv')->get();
+        return view('patient_dashboard',compact('consultations'));
+    }
+    public function profileSetting(){
+        $villes=Ville::orderBy('name')->get();
+
+        return view('patientProfileSetting',compact('villes'));
     }
 }

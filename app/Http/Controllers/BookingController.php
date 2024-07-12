@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Consultation;
 use App\Models\Doctor;
+use App\Models\Status;
 use Illuminate\Http\Request;
 
 class BookingController extends Controller
@@ -30,9 +31,10 @@ class BookingController extends Controller
             'heureRdv' => $request->appointment_time,
             'patientId' => $patientId,
             'doctorId' => $doctorId,
+            'statusId' => Status::where(strtolower('name'),'pending')->first('id')->id
         ]);
     
-        return redirect()->route('bookingPage',compact('doctorId'))->withSuccess('Consultation added successfully.');
+        return redirect()->route('patient.dashboard')->withSuccess('Consultation added successfully.');
     }
     
     

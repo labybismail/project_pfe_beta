@@ -27,11 +27,16 @@
                     <i class="fas fa-times"></i>
                 </a>
             </div>
-            @if(request()->is('searchDoctor'))
-
             <style>
                 header nav ul li a {
                     color: black !important;
+                }
+            </style>
+            @if(request()->is('home'))
+
+            <style>
+                header nav ul li a {
+                    color: white !important;
                 }
             </style>
             @endif
@@ -60,7 +65,7 @@
                         <a href="calendar.php">Calendar</a>
                     </li>
                     <li>
-                        <a href="booking.php">Booking</a>
+                        <a href="{{route('patient.dashboard')}}">Patient Dashboard</a>
                     </li>
                     <li>
                         <a href="profile-settings.php">Profile</a>

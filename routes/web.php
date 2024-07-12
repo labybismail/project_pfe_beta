@@ -5,6 +5,8 @@ use App\Http\Controllers\homeController;
 use App\Http\Controllers\pagesRedirects;
 use App\Http\Controllers\loginController;
 use App\Http\Controllers\doctorController;
+use App\Http\Controllers\PatientConroller;
+use Illuminate\Routing\RedirectController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\specialitiesController;
 
@@ -23,12 +25,17 @@ Route::middleware('isGuest')->group(function () {
     Route::get('/register', [pagesRedirects::class, 'register'])->name('register');
     Route::POST('/register', [loginController::class, 'registerAttempt'])->name('registerAttempt');
 });
-Route::middleware('isPatient')->group(function () {
-    Route::post('/booking', [BookingController::class, 'bookingPage'])->name('bookingPage');
-    Route::POST('/book', [BookingController::class, 'store'])->name('book.store');
 
-});
 Route::middleware('isLogged')->group(function () {
+    Route::middleware('isPatient')->group(function () {
+        Route::post('/booking', [BookingController::class, 'bookingPage'])->name('bookingPage');
+        Route::POST('/book', [BookingController::class, 'store'])->name('book.store');
+        Route::get('/dashboard', [pagesRedirects::class, 'patientDashboard'])->name('patient.dashboard');
+        Route::get('/profileSetting', [pagesRedirects::class, 'profileSetting'])->name('patient.profileSetting');
+        Route::put('/updateInfos/{id}', [PatientConroller::class, 'updateInfos'])->name('patient.updateInfos');
+    
+    });
+    
     Route::middleware('isAdmin')->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/dashboard', [pagesRedirects::class, 'adminIndex'])->name('admin.index');

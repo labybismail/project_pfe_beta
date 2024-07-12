@@ -86,7 +86,7 @@
             border-radius: 4px;
             /* Border radius */
             color: #333;
-            border-color:transparent;
+            border-color: transparent;
             /* Initial text color */
             text-align: center;
         }
@@ -166,9 +166,14 @@
                                 <h4 class="mb-1">@php echo Carbon\Carbon::now()->format('d F Y') @endphp</h4>
                                 <p class="text-muted">@php echo Carbon\Carbon::now()->format('l') @endphp</p>
                             </div>
-                            
+
                         </div>
                         <!-- Schedule Widget -->
+                        @if (session('success'))
+                            <div class="alert alert-success" role="alert">
+                                {{ session('success') }}
+                            </div>
+                        @endif
                         <div class="card booking-schedule schedule-widget">
 
                             <!-- Schedule Header -->
@@ -190,8 +195,9 @@
                                         @endphp
                                         <!-- Day Slot -->
                                         <form action="{{ route('book.store') }}" method="post">@csrf
-                                            <input type="hidden" name="doctorID" value="{{$doctor->id}}">
-                                            <input type="hidden" name="patientID" value="{{session()->get('user')->patient->id}}">
+                                            <input type="hidden" name="doctorID" value="{{ $doctor->id }}">
+                                            <input type="hidden" name="patientID"
+                                                value="{{ session()->get('user')->patient->id }}">
                                             <div class="day-slot">
                                                 <ul style="">
 
@@ -204,7 +210,8 @@
                                                     const daySlotContainer = document.querySelector('.day-slot ul');
                                                     const daysOfWeek = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
                                                     const monthsOfYear = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov',
-                                                        'Dec'];
+                                                        'Dec'
+                                                    ];
 
                                                     let currentDate = new Date();
                                                     let count = 0;
@@ -277,7 +284,7 @@
                                                             onchange="check(this)" class="timing-radio"
                                                             value="09:00:00">
                                                         <label for="time-0900-am" class="timing">
-                                                            <span>09:00</span> <span>AM</span>
+                                                            <span>09:00</span> <span></span>
                                                         </label>
                                                     </div>
                                                 </li>
@@ -288,7 +295,62 @@
                                                             onchange="check(this)" class="timing-radio"
                                                             value="10:00:00">
                                                         <label for="time-1000-am" class="timing">
-                                                            <span>10:00</span> <span>AM</span>
+                                                            <span>10:00</span> <span></span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+
+                                                    <div class="timing-container">
+                                                        <input type="radio" id="time-1100-am" name="appointment_time"
+                                                            onchange="check(this)" class="timing-radio"
+                                                            value="11:00:00">
+                                                        <label for="time-1100-am" class="timing">
+                                                            <span>11:00</span> <span></span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+
+                                                    <div class="timing-container">
+                                                        <input type="radio" id="time-1200-am"
+                                                            name="appointment_time" onchange="check(this)"
+                                                            class="timing-radio" value="12:00:00">
+                                                        <label for="time-1200-am" class="timing">
+                                                            <span>12:00</span> <span></span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+
+                                                    <div class="timing-container">
+                                                        <input type="radio" id="time-1400-am"
+                                                            name="appointment_time" onchange="check(this)"
+                                                            class="timing-radio" value="14:00:00">
+                                                        <label for="time-1400-am" class="timing">
+                                                            <span>14:00</span> <span></span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+
+                                                    <div class="timing-container">
+                                                        <input type="radio" id="time-1500-am"
+                                                            name="appointment_time" onchange="check(this)"
+                                                            class="timing-radio" value="15:00:00">
+                                                        <label for="time-1500-am" class="timing">
+                                                            <span>15:00</span> <span></span>
+                                                        </label>
+                                                    </div>
+                                                </li>
+                                                <li>
+
+                                                    <div class="timing-container">
+                                                        <input type="radio" id="time-1600-am"
+                                                            name="appointment_time" onchange="check(this)"
+                                                            class="timing-radio" value="16:00:00">
+                                                        <label for="time-1600-am" class="timing">
+                                                            <span>16:00</span> <span></span>
                                                         </label>
                                                     </div>
                                                 </li>

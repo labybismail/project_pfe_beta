@@ -18,4 +18,8 @@ class Consultation extends Model
     {
         return $this->belongsTo(Patient::class, 'patientId', 'id');
     }
+    public function status()
+    {
+        return $this->belongsTo(Status::class,'statusId');
+    }
 }

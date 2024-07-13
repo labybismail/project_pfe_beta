@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Doctor;
 use App\Models\Patient;
 use App\Models\User;
 use App\Models\Admin;
@@ -31,6 +32,9 @@ class loginController extends Controller
             $request->session()->put('isLogged', true); // Example session flag
             if(Admin::where('user_id',$user->id)->exists()){
               return redirect()->route('admin.index');
+            }
+            if(Doctor::where('user_id', session()->get('user')->id)->exists()){
+                return redirect()->route('doctorDashboard');
             }
             return redirect()->route('home');
         }

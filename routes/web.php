@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AppointmentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\pagesRedirects;
@@ -27,6 +28,12 @@ Route::middleware('isGuest')->group(function () {
 });
 
 Route::middleware('isLogged')->group(function () {
+    Route::middleware('isDoctor')->group(function(){
+        Route::get('/doctorDashboard', [pagesRedirects::class, 'doctorDashboard'])->name('doctorDashboard');
+        Route::put('/doctorDashboard/{id}', [AppointmentsController::class, 'update'])->name('doctorDashboard.update');
+        Route::get('/doctorAppointment', [pagesRedirects::class, 'doctorAppointment'])->name('doctorAppointment');
+        
+    });
     Route::middleware('isPatient')->group(function () {
         Route::post('/booking', [BookingController::class, 'bookingPage'])->name('bookingPage');
         Route::POST('/book', [BookingController::class, 'store'])->name('book.store');

@@ -8,6 +8,7 @@ use App\Models\Review;
 use App\Models\Patient;
 use App\Models\Speciality;
 use App\Models\Consultation;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class pagesRedirects extends Controller
@@ -69,7 +70,20 @@ class pagesRedirects extends Controller
     }
     public function profileSetting(){
         $villes=Ville::orderBy('name')->get();
-
         return view('patientProfileSetting',compact('villes'));
+    }
+    public function doctorDashboard(){
+        $totalPatients = Consultation::where('doctorId', session()->get('user')->doctor->id)
+        ->distinct('patientId')
+        ->count('patientId');        
+        $todaysPatients = Consultation::where('doctorId')->where('dateRdv',Carbon::now()->format('Y-m-d'))->count();
+        $appoitements = Consultation::where('doctorId', session()->get('user')->doctor->id);
+        return view('doctor_dashboard',compact('totalPatients','todaysPatients','appoitements'));
+
+    }
+    public function doctorAppointment(){
+        $appoitments=Consultation::where('doctorId',session()->get('user')->doctor->id)->where('statusId', 4)->orderBy('dateRdv')->get();
+        return view('appointments',compact('appoitments'));
+        
     }
 }

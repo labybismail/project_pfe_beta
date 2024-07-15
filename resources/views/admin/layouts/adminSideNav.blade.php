@@ -24,7 +24,7 @@
                     <a href="{{route('admin.reviewsList')}}"><i class="fe fe-star-o"></i> <span>Reviews</span></a>
                 </li>            
                 <li> 
-                    <a href="profile.html"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
+                    <a href="{{route('admin.profile')}}"><i class="fe fe-user-plus"></i> <span>Profile</span></a>
                 </li>
                  
                  

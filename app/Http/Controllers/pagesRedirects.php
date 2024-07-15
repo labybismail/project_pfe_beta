@@ -91,8 +91,10 @@ class pagesRedirects extends Controller
         
     } public function doctor_profileSettings(){
         $villes=Ville::orderBy('name')->get();
-
         return view('doctor_profileSettings',compact('villes'));
-        
+    }
+    public function profile(){
+        $villes=Ville::orderBy('name')->get();
+        return view('admin.profile',compact('villes'));
     }
 }

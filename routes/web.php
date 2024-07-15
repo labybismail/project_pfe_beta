@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\adminController;
 use App\Http\Controllers\AppointmentsController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
@@ -55,9 +56,12 @@ Route::middleware('isLogged')->group(function () {
                 Route::post('add', [doctorController::class, 'store'])->name('admin.doctorsListstore');
                 Route::delete('{id}', [doctorController::class, 'destroy'])->name('admin.deleteDoctor');
                 Route::get('/edit/{id}', [doctorController::class, 'edit'])->name('admin.deleteEdit');
-                Route::put('/edit/{id}', [doctorController::class, 'update'])->name('admin.doctorsListUpdate');
+                Route::put('/edit/{id}', [doctorController::class, 'update'])->name('admin.doctorsListUpdate'); 
 
             });
+            Route::get('/profile', [pagesRedirects::class, 'profile'])->name('admin.profile');
+
+            Route::put('profile/edit/{id}', [adminController::class, 'update'])->name('admin.updateInfos');
 
             Route::get('/patientsList', [pagesRedirects::class, 'patientsList'])->name('admin.patientsList');
             Route::get('/consultationsList', [pagesRedirects::class, 'consultationsList'])->name('admin.consultationsList');

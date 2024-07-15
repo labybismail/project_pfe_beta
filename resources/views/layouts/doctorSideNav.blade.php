@@ -44,7 +44,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="my-patients.html">
+                    <a href="{{route('doctor_myPatients')}}">
                         <i class="fas fa-user-injured"></i>
                         <span>My Patients</span>
                     </a>

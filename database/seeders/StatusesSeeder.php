@@ -16,24 +16,28 @@ class StatusesSeeder extends Seeder
     {
         $statuses = [
             [
-                'id'=>1,
-                'name' => 'Accepted'],
+                'id' => 1,
+                'name' => 'Accepted'
+            ],
             [
-                'id'=>2,
-                'name' => 'Canceled'],
+                'id' => 2,
+                'name' => 'Canceled'
+            ],
             [
-                'id'=>3,
-                'name' => 'Rejected'],
+                'id' => 3,
+                'name' => 'Rejected'
+            ],
             [
-                'id'=>4,
-                'name' => 'Pending'],
+                'id' => 4,
+                'name' => 'Pending'
+            ],
         ];
-        foreach($statuses as $status ){
+        foreach ($statuses as $status) {
             Status::create([
-                'id'=>$status['id'],
-                'name'=>$status['name'],
-                'created_at'=>Carbon::now(),
-                'updated_at'=>Carbon::now()
+                'id' => $status['id'],
+                'name' => $status['name'],
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now()
             ]);
         }
     }

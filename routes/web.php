@@ -32,6 +32,7 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/doctorDashboard', [pagesRedirects::class, 'doctorDashboard'])->name('doctorDashboard');
         Route::put('/doctorDashboard/{id}', [AppointmentsController::class, 'update'])->name('doctorDashboard.update');
         Route::get('/doctorAppointment', [pagesRedirects::class, 'doctorAppointment'])->name('doctorAppointment');
+        Route::get('/doctor_myPatients', [pagesRedirects::class, 'doctor_myPatients'])->name('doctor_myPatients');
         
     });
     Route::middleware('isPatient')->group(function () {

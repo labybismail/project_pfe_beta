@@ -58,7 +58,9 @@ class adminController extends Controller
             'email' => 'required|email|max:255',
             'tel' => 'required|string|max:15',
             'address' => 'required|string|max:255',
-            'ville' => 'required|exists:villes,id'
+            'ville' => 'required|exists:villes,id',
+            'password' => 'nullable|string|min:8|confirmed',
+
         ]);
     
         $admin = Admin::findOrFail($id);
@@ -71,7 +73,9 @@ class adminController extends Controller
         $user->tel = $request->input('tel');
         $user->address = $request->input('address');
         $user->ville_id = $request->input('ville');
-    
+        if ($request->filled('password')) {
+            $user->password = bcrypt($request->input('password'));
+        }
         $user->save();
         $admin->save();
     

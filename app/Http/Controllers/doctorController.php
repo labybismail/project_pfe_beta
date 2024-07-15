@@ -11,7 +11,7 @@ use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
-
+use Validator;
 class doctorController extends Controller
 {
     /**
@@ -163,12 +163,12 @@ class doctorController extends Controller
             'address' => 'required|string|max:255',
             'speciality' => 'required|exists:specialities,id',
             'appointment_price' => 'required|numeric|min:0',
-            'profile_picture' => 'nullable|image|max:2048',
+            'profile_picture' => 'nullable|image|mimes:jpg,jpeg,gif,png|max:2048',
             'status' => 'required|in:A,I',
-            'ville' => 'required|exists:villes,id'
+            'ville' => 'required|exists:villes,id',
+            'about' => 'nullable|string'
 
         ]);
-
         try {
             // Find the doctor
             $doctor = Doctor::findOrFail($id);
@@ -185,6 +185,9 @@ class doctorController extends Controller
             $user->address = $request->input('address');
             $user->status_compte = $request->input('status');
             $user->ville = $request->input('ville');
+            if($request->filled('about')){
+                $doctor->about = $request->input('about');
+            }
             if ($request->filled('password')) {
                 $user->password = bcrypt($request->input('password'));
             }
@@ -221,8 +224,7 @@ class doctorController extends Controller
                 // Save the file to storage
                 Storage::putFileAs('public', $file, $filePath);
 
-                // Update user with profile picture path
-                $user->profile_picture = $filePath;
+                // Update user with profile picture path 
             }
 
             $user->save();
@@ -235,6 +237,54 @@ class doctorController extends Controller
             return redirect()->back()->with('error', 'Failed to update doctor. ' . $e->getMessage())->withInput();
         }
     }
+    public function update2(Request $request, $id)
+{
+    // Validate the incoming request data
+    $validator = Validator::make($request->all(), [
+        'first_name' => 'required|string|max:255',
+        'last_name' => 'required|string|max:255',
+        'email' => 'required|email|max:255',
+        'phone' => 'nullable|string|max:20',
+        'gender' => 'required|string|in:M,F',
+        'dateNaissance' => 'required|date',
+        'about' => 'nullable|string',
+        'appointment_price' => 'nullable|numeric|min:0',
+        'profile_picture' => 'nullable|image|max:2048',
+    ]);
+
+    if ($validator->fails()) {
+        return redirect()->back()->withErrors($validator)->withInput();
+    }
+
+    // Find the user and doctor by ID
+    $user = User::findOrFail($id);
+    $doctor = $user->doctor;
+
+    // Update the user fields
+    $user->prenom = $request->input('first_name');
+    $user->nom = $request->input('last_name');
+    $user->email = $request->input('email');
+    $user->tel = $request->input('phone');
+    $user->Sexe = $request->input('gender');
+    $user->dateNaissance = $request->input('dateNaissance');
+
+    // Handle the file upload if the profile picture is provided
+    if ($request->hasFile('profile_picture')) {
+        $profilePicture = $request->file('profile_picture');
+        $filename = $user->nom.'_'.$user->prenom . '.' . $profilePicture->getClientOriginalExtension();
+        $profilePicture->move(public_path('storage/doctors'), $filename);
+    }
+
+    // Update the doctor fields
+    $doctor->about = $request->input('about');
+    $doctor->prix = $request->input('appointment_price');
+
+    // Save the changes
+    $user->save();
+    $doctor->save();
+
+    return redirect()->route('admin.doctorsList')->with('success', 'Doctor information updated successfully.');
+}
     /**
      * Remove the specified resource from storage.
      */

@@ -15,9 +15,9 @@ use App\Http\Controllers\specialitiesController;
 
 Route::get('doctor/{id}', [doctorController::class, 'show'])->name('doctorProfile');
 
-Route::middleware('isNotAdmin')->group(function () {
+Route::middleware(['isNotAdmin', 'isNotDoctor'])->group(function () {
     Route::get('/', [homeController::class, 'home'])->name('home');
-    Route::post('/searchDoctor',[doctorController::class,'searchDoctor'])->name('searchDoctor');
+    Route::post('/searchDoctor', [doctorController::class, 'searchDoctor'])->name('searchDoctor');
 });
 Route::middleware('isGuest')->group(function () {
 
@@ -28,12 +28,14 @@ Route::middleware('isGuest')->group(function () {
 });
 
 Route::middleware('isLogged')->group(function () {
-    Route::middleware('isDoctor')->group(function(){
+    Route::middleware('isDoctor')->group(function () {
         Route::get('/doctorDashboard', [pagesRedirects::class, 'doctorDashboard'])->name('doctorDashboard');
         Route::put('/doctorDashboard/{id}', [AppointmentsController::class, 'update'])->name('doctorDashboard.update');
         Route::get('/doctorAppointment', [pagesRedirects::class, 'doctorAppointment'])->name('doctorAppointment');
         Route::get('/doctor_myPatients', [pagesRedirects::class, 'doctor_myPatients'])->name('doctor_myPatients');
-        
+        Route::get('/doctor_profileSettings', [pagesRedirects::class, 'doctor_profileSettings'])->name('doctor_profileSettings');
+        Route::put('/edit/{id}', [doctorController::class, 'update2'])->name('doctor_Update');
+
     });
     Route::middleware('isPatient')->group(function () {
         Route::post('/booking', [BookingController::class, 'bookingPage'])->name('bookingPage');
@@ -41,9 +43,9 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/dashboard', [pagesRedirects::class, 'patientDashboard'])->name('patient.dashboard');
         Route::get('/profileSetting', [pagesRedirects::class, 'profileSetting'])->name('patient.profileSetting');
         Route::put('/updateInfos/{id}', [PatientConroller::class, 'updateInfos'])->name('patient.updateInfos');
-    
+
     });
-    
+
     Route::middleware('isAdmin')->group(function () {
         Route::prefix('admin')->group(function () {
             Route::get('/dashboard', [pagesRedirects::class, 'adminIndex'])->name('admin.index');
@@ -54,6 +56,7 @@ Route::middleware('isLogged')->group(function () {
                 Route::delete('{id}', [doctorController::class, 'destroy'])->name('admin.deleteDoctor');
                 Route::get('/edit/{id}', [doctorController::class, 'edit'])->name('admin.deleteEdit');
                 Route::put('/edit/{id}', [doctorController::class, 'update'])->name('admin.doctorsListUpdate');
+
             });
 
             Route::get('/patientsList', [pagesRedirects::class, 'patientsList'])->name('admin.patientsList');

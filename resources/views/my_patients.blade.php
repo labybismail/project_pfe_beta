@@ -46,7 +46,7 @@
                     <div class="col-md-12 col-12">
                         <nav aria-label="breadcrumb" class="page-breadcrumb">
                             <ol class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Home</a></li>
+                                <li class="breadcrumb-item"><a href="{{ route('home') }}">Home</a></li>
                                 <li class="breadcrumb-item active" aria-current="page">My Patients</li>
                             </ol>
                         </nav>
@@ -68,7 +68,15 @@
                         @include('layouts.doctorSideNav')
 
                         <!-- /Profile Sidebar -->
-
+                        @php
+                            use Carbon\Carbon;
+                            function get_age_int1($dateNaissance)
+                            {
+                                $dateNaissance = Carbon::parse($dateNaissance);
+                                $formattedDate = $dateNaissance->format('j F Y');
+                                return (int) $dateNaissance->diffInYears(Carbon::now());
+                            }
+                        @endphp
                     </div>
                     @include('functions')
                     @foreach ($appoitments as $appoitment)
@@ -81,7 +89,8 @@
                                             <div class="pro-widget-content">
                                                 <div class="profile-info-widget">
                                                     <a href="#" class="booking-doc-img">
-                                                        <img src="{{patientProfileImage($appoitment->patient->user->nom,$appoitment->patient->user->prenom)}}" alt="User Image">
+                                                        <img src="{{ patientProfileImage($appoitment->patient->user->nom, $appoitment->patient->user->prenom) }}"
+                                                            alt="User Image">
                                                     </a>
                                                     <div class="profile-det-info">
                                                         <h3><a
@@ -100,7 +109,8 @@
                                             <div class="patient-info">
                                                 <ul>
                                                     <li>Phone <span>{{ $appoitment->patient->user->tel }}</span></li>
-                                                    <li>Age <span>{{get_age_int($appoitment->patient->user->dateNaissance)}} Years,
+                                                    <li>Age <span>{{ get_age_int1($appoitment->patient->user->dateNaissance) }}
+                                                            Years,
                                                             {{ $appoitment->patient->user->Sexe == 'M' ? 'Male' : 'Female' }}</span>
                                                     </li>
                                                     <li>Blood Group <span>{{ $appoitment->patient->blood_type }}</span>

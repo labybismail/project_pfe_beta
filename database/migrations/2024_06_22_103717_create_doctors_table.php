@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->unsignedBigInteger('speciality_id');
+            $table->text('about');
             $table->timestamps();
             $table->integer('prix');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

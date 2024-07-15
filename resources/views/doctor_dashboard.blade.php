@@ -165,24 +165,6 @@
                                                                     <th>Type</th>
                                                                     <th></th>
                                                                 </tr>
-                                                                @php
-
-                                                                    function patientProfileImage($nom, $prenom)
-                                                                    {
-                                                                        $extensions = ['jpg', 'jpeg', 'png', 'gif'];
-                                                                        foreach ($extensions as $ext) {
-                                                                            $filename = public_path(
-                                                                                "storage/patients/{$nom}_{$prenom}.{$ext}",
-                                                                            );
-                                                                            if (file_exists($filename)) {
-                                                                                return asset(
-                                                                                    "storage/patients/{$nom}_{$prenom}.{$ext}",
-                                                                                );
-                                                                            }
-                                                                        }
-                                                                        return asset('storage/doctors/default.jpg');
-                                                                    }
-                                                                @endphp
                                                             </thead>
                                                             <tbody>
                                                                 @foreach ($appoitements->where('statusId', 4)->get() as $upcommings)

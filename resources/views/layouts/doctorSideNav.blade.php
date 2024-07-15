@@ -1,20 +1,11 @@
 <div class="profile-sidebar">
     <div class="widget-profile pro-widget-content">
         <div class="profile-info-widget">
+            @include('functions')
 
             @php
                 $user  = App\Models\User::find(session()->get('user')->id);
-                function doctorProfileImage($nom, $prenom)
-                {
-                    $extensions = ['jpg', 'jpeg', 'png', 'gif'];
-                    foreach ($extensions as $ext) {
-                        $filename = public_path("storage/doctors/{$nom}_{$prenom}.{$ext}");
-                        if (file_exists($filename)) {
-                            return asset("storage/doctors/{$nom}_{$prenom}.{$ext}");
-                        }
-                    }
-                    return asset('storage/doctors/default.jpg');
-                }
+                
             @endphp
             <a href="#" class="booking-doc-img">
                 <img src="{{doctorProfileImage($user->nom,$user->prenom)}}" alt="User Image">
@@ -57,7 +48,7 @@
                 </li>
 
                 <li>
-                    <a href="doctor-profile-settings.html">
+                    <a href="{{route('doctor_profileSettings')}}">
                         <i class="fas fa-user-cog"></i>
                         <span>Profile Settings</span>
                     </a>

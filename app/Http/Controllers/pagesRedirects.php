@@ -89,5 +89,10 @@ class pagesRedirects extends Controller
         $appoitments=Consultation::where('doctorId',session()->get('user')->doctor->id)->where('statusId', 1)->orderBy('dateRdv')->get();
         return view('my_patients',compact('appoitments'));
         
+    } public function doctor_profileSettings(){
+        $villes=Ville::orderBy('name')->get();
+
+        return view('doctor_profileSettings',compact('villes'));
+        
     }
 }

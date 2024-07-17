@@ -52,7 +52,7 @@
 							<div class="col-sm-12">
 								<h3 class="page-title">Reviews</h3>
 								<ul class="breadcrumb">
-									<li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+									<li class="breadcrumb-item"><a href="{{route('home')}}">Dashboard</a></li>
 									<li class="breadcrumb-item active">Reviews</li>
 								</ul>
 							</div>
@@ -85,7 +85,11 @@
 													<td>{{ $review->comment }}</td>
 													<td>{{ $review->created_at->format('d M Y') }}</td>
 													<td class="text-right">
-														<div class="btn btn-danger"><i class="fa fa-trash"></i></div>
+														<form action="{{route('admin.reviewDelete', $review->id)}}" onsubmit="if(!confirm('Are you sure you want to delete this review?')){return false;}" method="post">
+															@csrf 
+															@method('delete')
+															<button  type="submit" class="btn btn-danger"><i class="fa fa-trash"></i></button>
+														</form>
 													</td>
 												</tr>
 												@endforeach

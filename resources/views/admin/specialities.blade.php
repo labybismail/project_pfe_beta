@@ -54,7 +54,7 @@
                         <div class="col-sm-7 col-auto">
                             <h3 class="page-title">Specialities</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('home')}}">Dashboard</a></li>
                                 <li class="breadcrumb-item active">Specialities</li>
                             </ul>
                         </div>

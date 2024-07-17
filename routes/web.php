@@ -38,6 +38,8 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/doctor_myPatients', [pagesRedirects::class, 'doctor_myPatients'])->name('doctor_myPatients');
         Route::get('/doctor_profileSettings', [pagesRedirects::class, 'doctor_profileSettings'])->name('doctor_profileSettings');
         Route::put('/edit/{id}', [doctorController::class, 'update2'])->name('doctor_Update');
+        Route::get('/reviews', [pagesRedirects::class, 'doctorReviews'])->name('doctor.reviews');
+
 
     });
     Route::middleware('isPatient')->group(function () {
@@ -47,6 +49,8 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/profileSetting', [pagesRedirects::class, 'profileSetting'])->name('patient.profileSetting');
         Route::put('/updateInfos/{id}', [PatientConroller::class, 'updateInfos'])->name('patient.updateInfos');
         Route::post('/review',[ReviewController::class, 'store'])->name('review.store');
+        Route::get('/reviews', [pagesRedirects::class, 'patientReviews'])->name('patient.reviews');
+
     });
 
     Route::middleware('isAdmin')->group(function () {
@@ -68,7 +72,10 @@ Route::middleware('isLogged')->group(function () {
             Route::get('/patientsList', [pagesRedirects::class, 'patientsList'])->name('admin.patientsList');
             Route::get('/consultationsList', [pagesRedirects::class, 'consultationsList'])->name('admin.consultationsList');
             Route::get('/specialitiesList', [pagesRedirects::class, 'specialitiesList'])->name('admin.specialitiesList');
-            Route::get('/reviewsList', [pagesRedirects::class, 'reviewsList'])->name('admin.reviewsList');
+            Route::prefix('reviewsList')->group(function () {
+                Route::get('/', [pagesRedirects::class, 'reviewsList'])->name('admin.reviewsList');
+                Route::delete('reviewDelete/{id}',[ReviewController::class, 'destroy'])->name('admin.reviewDelete');
+            });
             Route::prefix('speciality')->group(function () {
                 Route::post('/store', [specialitiesController::class, 'store'])->name('speciality.store');
                 Route::delete('/{id}', [specialitiesController::class, 'destroy'])->name('speciality.destroy');

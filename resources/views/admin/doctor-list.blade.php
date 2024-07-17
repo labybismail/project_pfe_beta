@@ -60,8 +60,7 @@
                         <div class="col-sm-11">
                             <h3 class="page-title">List of Doctors</h3>
                             <ul class="breadcrumb">
-                                <li class="breadcrumb-item"><a href="index.html">Dashboard</a></li>
-                                <li class="breadcrumb-item"><a href="javascript:(0);">Users</a></li>
+                                <li class="breadcrumb-item"><a href="{{route('home')}}">Dashboard</a></li> 
                                 <li class="breadcrumb-item active">Doctor</li>
                             </ul>
                         </div>

@@ -79,9 +79,9 @@
                                                 <span class="text-danger">{{ $errors->first('password') }}</span>
                                             @endif
                                         </div>
-                                        <div class="text-right">
+                                        {{-- <div class="text-right">
                                             <a class="forgot-link" href="forgot-password.html">Forgot Password?</a>
-                                        </div>
+                                        </div> --}}
                                         <button class="btn btn-primary btn-block btn-lg login-btn"
                                             type="submit">Login</button>
                                         <div class="login-or">

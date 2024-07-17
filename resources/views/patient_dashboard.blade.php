@@ -72,7 +72,7 @@
                     <div class="col-md-7 col-lg-8 col-xl-9">
 
                         <div class="row">
-                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-4 patient-dashboard-top">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <div class="mb-3">
@@ -84,19 +84,19 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-4 patient-dashboard-top">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <div class="mb-3">
                                             <img src="assets/img/specialities/pt-dashboard-02.png" alt=""
                                                 width="55">
                                         </div>
-                                        <h5>Body Temperature</h5>
-                                        <h6>18 <sub>C</sub></h6>
+                                        <h5>Blood type</h5>
+                                        <h6>{{App\Models\Patient::find(session()->get('user')->patient->id)->first('blood_type')->blood_type}}</h6>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                            <div class="col-12 col-md-6 col-lg-4 col-xl-4 patient-dashboard-top">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <div class="mb-3">
@@ -108,7 +108,7 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
+                            {{-- <div class="col-12 col-md-6 col-lg-4 col-xl-3 patient-dashboard-top">
                                 <div class="card">
                                     <div class="card-body text-center">
                                         <div class="mb-3">
@@ -119,7 +119,7 @@
                                         <h6>202/90 <sub>mg/dl</sub></h6>
                                     </div>
                                 </div>
-                            </div>
+                            </div> --}}
                         </div>
 
 

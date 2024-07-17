@@ -54,6 +54,12 @@
                             <i class="fas fa-user-cog"></i>
                             <span>Profile Settings</span>
                         </a>
+                    </li> 
+                    <li>
+                        <a href="{{ route('patient.reviews') }}">
+                            <i class="fas fa-star"></i>
+                            <span>Reviews</span>
+                        </a>
                     </li>
                     {{-- <li>
                         <a href="change-password.html">

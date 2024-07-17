@@ -74,6 +74,7 @@ class ReviewController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        Review::find($id)->delete();
+        return redirect()->back()->with('success','deleted with success');
     }
 }

@@ -97,4 +97,11 @@ class pagesRedirects extends Controller
         $villes=Ville::orderBy('name')->get();
         return view('admin.profile',compact('villes'));
     }
+    public function doctorReviews(){
+        $reviews=Review::where('doctorId',session()->get('user')->doctor->id)->orderByDesc('created_at')->get();
+        return view('reviews',compact('reviews'));
+    } public function patientReviews(){
+        $reviews=Review::where('patientId',session()->get('user')->patient->id)->orderByDesc('created_at')->get();
+        return view('patientReviews',compact('reviews'));
+    }
 }

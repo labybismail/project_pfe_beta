@@ -17,6 +17,7 @@ return new class extends Migration
             $table->unsignedBigInteger('doctorId');
             $table->integer('rating');
             $table->text('comment');
+            $table->boolean('recomended')->nullable();
             $table->foreign('patientId')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('doctorId')->references('id')->on('doctors')->onDelete('cascade');
             $table->timestamps();

@@ -25,6 +25,7 @@ class PatientConroller extends Controller
         // Find the patient and update the information
         $patient = Patient::findOrFail($id);
         $user = $patient->user;
+        $patient->blood_type = $request->input('blood_group');
         // Handle file upload if a new profile photo is uploaded
         if ($request->hasFile('photo_profile')) {
             $fileName = $user->nom . '_' . $user->prenom . '.' . $request->photo_profile->extension();

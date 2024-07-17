@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/doctor-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:15:37 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -264,6 +263,5 @@
 
 </body>
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/doctor-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:15:58 GMT -->
 
 </html>

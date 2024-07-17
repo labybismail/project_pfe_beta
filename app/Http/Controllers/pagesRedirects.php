@@ -20,7 +20,7 @@ class pagesRedirects extends Controller
         $patientsCount=Patient::count();
         $patients=Patient::all();
         $consultationsCount=Consultation::count();
-        $consultations=Consultation::all();
+        $consultations=Consultation::where('statusId',1)->get();
         return view('admin.index',compact('doctorsCount','patientsCount','consultationsCount','doctors','patients','consultations'));
     }
     public function doctorsList()
@@ -35,7 +35,7 @@ class pagesRedirects extends Controller
     }
     public function consultationsList()
     {
-        $consultations=Consultation::paginate(10);
+        $consultations=Consultation::where('statusId',1)->paginate(10);
         return view('admin.consultation-list',compact('consultations'));
     }
     public function specialitiesList()
@@ -65,7 +65,7 @@ class pagesRedirects extends Controller
         return view('admin.doctor-add',compact('specialities','villes'));
     }   
     public function patientDashboard(){
-        $consultations=Consultation::orderBy('dateRdv')->get();
+        $consultations=Consultation::where('patientId',session()->get('user')->patient->id)->orderByDesc('dateRdv')->get();
         return view('patient_dashboard',compact('consultations'));
     }
     public function profileSetting(){

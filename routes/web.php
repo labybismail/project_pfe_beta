@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\adminController;
 use App\Http\Controllers\AppointmentsController;
+use App\Http\Controllers\ReviewController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\homeController;
 use App\Http\Controllers\pagesRedirects;
@@ -29,6 +30,7 @@ Route::middleware('isGuest')->group(function () {
 });
 
 Route::middleware('isLogged')->group(function () {
+    
     Route::middleware('isDoctor')->group(function () {
         Route::get('/doctorDashboard', [pagesRedirects::class, 'doctorDashboard'])->name('doctorDashboard');
         Route::put('/doctorDashboard/{id}', [AppointmentsController::class, 'update'])->name('doctorDashboard.update');
@@ -44,7 +46,7 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/dashboard', [pagesRedirects::class, 'patientDashboard'])->name('patient.dashboard');
         Route::get('/profileSetting', [pagesRedirects::class, 'profileSetting'])->name('patient.profileSetting');
         Route::put('/updateInfos/{id}', [PatientConroller::class, 'updateInfos'])->name('patient.updateInfos');
-
+        Route::post('/review',[ReviewController::class, 'store'])->name('review.store');
     });
 
     Route::middleware('isAdmin')->group(function () {

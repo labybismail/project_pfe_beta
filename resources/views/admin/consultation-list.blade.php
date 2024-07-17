@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from doccure-html.dreamguystech.com/template/admin/appointment-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:17:37 GMT -->
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -42,7 +41,7 @@
 
         <!-- Sidebar -->
         @include('admin.layouts.adminSideNav')
-
+		@include('functions')
 			
 			<!-- Page Wrapper -->
             <div class="page-wrapper">
@@ -84,26 +83,22 @@
 												<tr>
 													<td>
 														<h2 class="table-avatar">
-															<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/doctors/doctor-thumb-01.jpg" alt="User Image"></a>
+															<a class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{ doctorProfileImage($consultation->doctor->user->nom,$consultation->doctor->user->prenom) }}" alt="User Image"></a>
 															Dr. {{$consultation->doctor->user->nom.' '.$consultation->doctor->user->prenom}}
 														</h2>
 													</td>
 													<td>{{$consultation->doctor->speciality->name}}</td>
 													<td>
 														<h2 class="table-avatar">
-															<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="assets/img/patients/patient1.jpg" alt="User Image"></a>
+															<a  class="avatar avatar-sm mr-2"><img class="avatar-img rounded-circle" src="{{ patientProfileImage($consultation->patient->user->nom,$consultation->patient->user->prenom) }}" alt="User Image"></a>
 															{{$consultation->patient->user->nom.' '.$consultation->patient->user->prenom}}
 														</h2>
 													</td>
 													<td>{{$consultation->dateRdv ? Carbon\Carbon::parse($consultation->dateRdv)->format('d F Y') : ''}}
 														<span class="text-primary d-block">{{-- Assuming $consultation->heureRdv contains the decimal time value --}}
-															@php
-																$heureRdv = strval($consultation->heureRdv); // Convert to string
-																$hours = substr($heureRdv, 0, 2); // Extract hours
-																$minutes = substr($heureRdv, 2, 2); // Extract minutes
-															@endphp
+														
 															
-															{{$hours}}:{{$minutes}}
+															{{ Carbon\Carbon::parse($consultation->heureRdv)->format('h:i') }}
 																</span></td>
 												</tr>
 											@endforeach
@@ -142,5 +137,4 @@
 		
     </body>
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/admin/appointment-list.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:17:40 GMT -->
 </html>

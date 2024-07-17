@@ -54,6 +54,7 @@ class loginController extends Controller
             'address' => 'required|string|max:255',
             'gender' => 'required|in:M,F',
             'date_of_birth' => 'required|date',
+            'ville'=>'required|exists:ville,id'
         ]);
 
         $user = new User();
@@ -67,11 +68,12 @@ class loginController extends Controller
         $user->sexe = $request->gender;
         $user->dateNaissance = $request->date_of_birth;
         $user->status_compte ='A';
+        $user->ville_id = $request->ville;
         $user->save();
 
         $patient = new Patient();
         $patient->user_id =$user->id;
-        $patient->grp_sanguin ='';
+        $patient->blood_type ='O-';
         $patient->save();
 
         return redirect()->route('login')->with('success', 'Registration successful. Please login.');

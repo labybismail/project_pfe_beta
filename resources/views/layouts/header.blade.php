@@ -28,9 +28,7 @@
                 </a>
             </div>
             <style>
-                header nav ul li a {
-                    color: black !important;
-                }
+               
             </style>
             @if (request()->is('home'))
                 <style>
@@ -46,13 +44,13 @@
                         <a href="{{ route('doctorDashboard') }}">Home</a>
                     </li>
                     <li>
-                        <a href="my-patients.php">Patients List</a>
+                        <a href="{{route('doctor_myPatients')}}">Patients List</a>
                     </li>
                     <li>
-                        <a href="doctor-profile-settings.php">Profile Settings</a>
+                        <a href="{{route('doctor_profileSettings')}}">Profile Settings</a>
                     </li>
                     <li>
-                        <a href="reviews.php">Reviews</a>
+                        <a href="#">Reviews</a>
                     </li>
                 @elseif(session()->has('user') && \App\Models\Patient::where('user_id', session()->get('user')->id)->exists())
                     <li class="has-submenu active">
@@ -61,14 +59,12 @@
                     <li>
                         <a style="cursor: pointer" onclick="$('.formHeaderSearch').submit()">Search Doctors</a>
                     </li>
-                    <li>
-                        <a href="calendar.php">Calendar</a>
-                    </li>
+                  
                     <li>
                         <a href="{{ route('patient.dashboard') }}">Patient Dashboard</a>
                     </li>
                     <li>
-                        <a href="profile-settings.php">Profile</a>
+                        <a href="{{route('patient.profileSetting')}}">Profile</a>
                     </li>
                 @elseif (session()->has('user') && \App\Models\Admin::where('user_id', session()->get('user')->id)->exists())
                     <li>

@@ -2,16 +2,18 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Speciality;
+use Validator;
 use App\Models\User;
 use App\Models\Doctor;
+use App\Models\Review;
+use App\Models\Speciality;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Validation\Rules\Password;
-use Validator;
+
 class doctorController extends Controller
 {
     /**
@@ -131,7 +133,12 @@ class doctorController extends Controller
     public function show(string $id)
     {
         $doctor = Doctor::find($id);
-        return view('doctor-profile', compact('doctor'));
+        $reviews = Review::where('patientId',session()->get('user')->patient->id)
+                    ->where('doctorId',$id)
+                    ->orderByDesc('created_at')
+                    ->get();
+        $doctorReviews =Review::where('doctorId',$id)->get();
+        return view('doctor-profile', compact('doctor','reviews','doctorReviews'));
     }
 
     /**

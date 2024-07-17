@@ -37,7 +37,7 @@ if(!function_exists('doctorProfileImage'))
         return asset('storage/doctors/default.jpg');
     }
 }
-if(!function_exists('doctorProfileImage'))
+if(!function_exists('get_age_int'))
 { 
 function get_age_int($dateNaissance){
 

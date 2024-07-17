@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
     
-<!-- Mirrored from doccure-html.dreamguystech.com/template/admin/reviews.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:17:44 GMT -->
 <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=0">
@@ -147,5 +146,4 @@
 		
     </body>
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/admin/reviews.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:17:44 GMT -->
 </html>

@@ -1,7 +1,6 @@
 <!DOCTYPE html> 
 <html lang="en">
 	
-<!-- Mirrored from doccure-html.dreamguystech.com/template/profile-settings.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:16:59 GMT -->
 <head>
 		<meta charset="utf-8">
 		<title>Doccure</title>
@@ -135,14 +134,14 @@
 												<div class="form-group">
 													<label>Blood Group</label>
 													<select class="form-control select" name="blood_group">
-														<option value="A-" @if(old('blood_group', $user->patient->blood_group) == 'A-') selected @endif>A-</option>
-														<option value="A+" @if(old('blood_group', $user->patient->blood_group) == 'A+') selected @endif>A+</option>
-														<option value="B-" @if(old('blood_group', $user->patient->blood_group) == 'B-') selected @endif>B-</option>
-														<option value="B+" @if(old('blood_group', $user->patient->blood_group) == 'B+') selected @endif>B+</option>
-														<option value="AB-" @if(old('blood_group', $user->patient->blood_group) == 'AB-') selected @endif>AB-</option>
-														<option value="AB+" @if(old('blood_group', $user->patient->blood_group) == 'AB+') selected @endif>AB+</option>
-														<option value="O-" @if(old('blood_group', $user->patient->blood_group) == 'O-') selected @endif>O-</option>
-														<option value="O+" @if(old('blood_group', $user->patient->blood_group) == 'O+') selected @endif>O+</option>
+														<option value="A-" @if(old('blood_group', $user->patient->blood_type) == 'A-') selected @endif>A-</option>
+														<option value="A+" @if(old('blood_group', $user->patient->blood_type) == 'A+') selected @endif>A+</option>
+														<option value="B-" @if(old('blood_group', $user->patient->blood_type) == 'B-') selected @endif>B-</option>
+														<option value="B+" @if(old('blood_group', $user->patient->blood_type) == 'B+') selected @endif>B+</option>
+														<option value="AB-" @if(old('blood_group', $user->patient->blood_type) == 'AB-') selected @endif>AB-</option>
+														<option value="AB+" @if(old('blood_group', $user->patient->blood_type) == 'AB+') selected @endif>AB+</option>
+														<option value="O-" @if(old('blood_group', $user->patient->blood_type) == 'O-') selected @endif>O-</option>
+														<option value="O+" @if(old('blood_group', $user->patient->blood_type) == 'O+') selected @endif>O+</option>
 													</select>
 													@error('blood_group')
 														<span class="text-danger">{{ $message }}</span>
@@ -243,5 +242,4 @@
 		
 	</body>
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/profile-settings.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:16:59 GMT -->
 </html>

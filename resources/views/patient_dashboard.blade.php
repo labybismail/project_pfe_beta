@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/patient-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:16:56 GMT -->
 
 <head>
     <meta charset="utf-8">
@@ -174,13 +173,13 @@
                                                                         <h2 class="table-avatar">
                                                                             <a class="avatar avatar-sm mr-2"><img
                                                                                     class="avatar-img rounded-circle"
-                                                                                    src="{{ asset('assets/img/doctors/doctor-thumb-01.jpg') }}"
+                                                                                    src="{{ doctorProfileImage($consultation->doctor->user->nom,$consultation->doctor->user->prenom) }}"
                                                                                     alt="User Image"></a>
                                                                             Dr.
                                                                             {{ $consultation->doctor->user->nom . ' ' . $consultation->doctor->user->prenom }}
                                                                         </h2>
                                                                     </td>
-                                                                    <td>{{ $consultation->dateRdv . ' ' . $consultation->heureRdv }}
+                                                                    <td>{{ $consultation->dateRdv . ' ' . Carbon\Carbon::parse($consultation->heureRdv)->format('h:i') }}
                                                                     </td>
                                                                     <td>{{ $consultation->created_at }}</td>
                                                                     <td>{{ $consultation->doctor->prix . 'DH' }}</td>
@@ -326,6 +325,5 @@
 
 </body>
 
-<!-- Mirrored from doccure-html.dreamguystech.com/template/patient-dashboard.html by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 08 Jul 2021 13:16:59 GMT -->
 
 </html>

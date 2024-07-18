@@ -38,7 +38,8 @@ Route::middleware('isLogged')->group(function () {
         Route::get('/doctor_myPatients', [pagesRedirects::class, 'doctor_myPatients'])->name('doctor_myPatients');
         Route::get('/doctor_profileSettings', [pagesRedirects::class, 'doctor_profileSettings'])->name('doctor_profileSettings');
         Route::put('/edit/{id}', [doctorController::class, 'update2'])->name('doctor_Update');
-        Route::get('/reviews', [pagesRedirects::class, 'doctorReviews'])->name('doctor.reviews');
+        
+        Route::get('/doctorReviews', [pagesRedirects::class, 'doctorReviews'])->name('doctorReviews');
 
 
     });

@@ -41,7 +41,7 @@
                     </a>
                 </li>
                 <li>
-                    <a href="{{route('doctor.reviews')}}">
+                    <a href="{{route('doctorReviews')}}">
                         <i class="fas fa-star"></i>
                         <span>Reviews</span>
                     </a>

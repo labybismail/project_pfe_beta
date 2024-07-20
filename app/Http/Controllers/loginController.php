@@ -54,7 +54,7 @@ class loginController extends Controller
             'address' => 'required|string|max:255',
             'gender' => 'required|in:M,F',
             'date_of_birth' => 'required|date',
-            'ville'=>'required|exists:ville,id'
+            'ville'=>'required|exists:villes,id'
         ]);
 
         $user = new User();

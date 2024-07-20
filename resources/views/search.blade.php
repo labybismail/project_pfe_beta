@@ -36,7 +36,7 @@
                                 <li class="breadcrumb-item active" aria-current="page">Search</li>
                             </ol>
                         </nav>
-                        <h2 class="breadcrumb-title">{{ $doctors->count() }} matches found </h2>
+                        <h2 class="breadcrumb-title">{{ $doctors->count() }} Doctors found </h2>
                     </div>
                     {{-- <div class="col-md-4 col-12 d-md-block d-none">
 							<div class="sort-by">

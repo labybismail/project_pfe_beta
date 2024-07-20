@@ -31,6 +31,7 @@ class BookingController extends Controller
             'heureRdv' => $request->appointment_time,
             'patientId' => $patientId,
             'doctorId' => $doctorId,
+            'price' => Doctor::find($doctorId)->first('prix')->prix,
             'statusId' => Status::where(strtolower('name'),'pending')->first('id')->id
         ]);
     

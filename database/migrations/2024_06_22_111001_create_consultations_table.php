@@ -18,6 +18,7 @@ return new class extends Migration
             $table->unsignedBigInteger('patientId');
             $table->unsignedBigInteger('doctorId');
             $table->unsignedBigInteger('statusId');
+            $table->integer('price')->default(0);
             $table->foreign('patientId')->references('id')->on('patients')->onDelete('cascade');
             $table->foreign('doctorId')->references('id')->on('doctors')->onDelete('cascade');
             $table->foreign('statusId')->references('id')->on('statuses')->onDelete('cascade');

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Validator;
 use App\Models\User;
+use App\Models\Ville;
 use App\Models\Doctor;
 use App\Models\Review;
 use App\Models\Speciality;
@@ -28,26 +29,37 @@ class doctorController extends Controller
         $villeID = $request->input('ville');
         $genderID = $request->input('gender');
         $specialityID = $request->input('speciality');
-
+    
         $query = Doctor::query()
-        ->join('users', 'users.id', '=', 'doctors.user_id');
+            ->join('users', 'users.id', '=', 'doctors.user_id');
+            
+        if ($specialityID != '') {
+            $query->where('doctors.speciality_id', $specialityID);
+        }
+        
+        if ($villeID != '') {
+            $query->where('users.ville_id', $villeID);
+        }
+        
+        if ($genderID != '') {
+            $query->where('users.sexe', $genderID);
+        }
+        
+        // Select all columns from doctors and specific columns from users except users.id
+        $doctors = $query->select(
+            'doctors.*', 
+            'users.nom', 
+            'users.prenom', 
+            'users.email', 
+            'users.ville_id', 
+            'users.sexe' 
+            // Add other columns you need from users here, excluding 'users.id'
+        )->get();
     
-    if ($specialityID != '') {
-        $query->where('doctors.speciality_id', $specialityID);
-    }
-    
-    if ($villeID != '') {
-        $query->where('users.ville_id', $villeID);
-    }
-    
-    if ($genderID != '') {
-        $query->where('users.sexe', $genderID);
-    }
-    
-    $doctors = $query->select('doctors.*', 'users.*')->get();
         $specialities = Speciality::orderBy('Name')->get();
         return view('search', compact('doctors', 'specialities', 'genderID', 'specialityID', 'villeID'));
     }
+    
     /**
      * Show the form for creating a new resource.
      */
@@ -61,28 +73,29 @@ class doctorController extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'prenom' => 'required|string|max:255',
-            'last_name' => 'required|string|max:255',
-            'cin' => 'required|string|max:20|unique:users,cin',
-            'gender' => 'required|string|in:M,F',
-            'email' => 'required|string|email|max:255|unique:users,email',
-            'phone' => 'required|string|max:10',
-            'dateNaissance' => 'required|date',
-            'address' => 'required|string|max:255',
-            'password' => ['required', 'confirmed', Password::min(8)->letters()->mixedCase()->numbers()],
-            'speciality' => 'required|exists:specialities,id',
-            'appointment_price' => 'required|numeric|min:0',
-            'profile_picture' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
-            'ville' => 'required|exists:villes,id'
 
-        ]);
+        // $request->validate([
+        //     'first_name' => 'required|string|max:255',
+        //     'last_name' => 'required|string|max:255',
+        //     'cin' => 'required|string|max:20|unique:users,cin',
+        //     'gender' => 'required|string|in:M,F',
+        //     'email' => 'required|string|email|max:255|unique:users,email',
+        //     'phone' => 'required|string|max:10',
+        //     'dateNaissance' => 'required|date',
+        //     'address' => 'required|string|max:255',
+        //     'password' => ['required', 'confirmed'],
+        //     'speciality' => 'required|exists:specialities,id',
+        //     'appointment_price' => 'required|numeric|min:0',
+        //     'profile_picture' => 'nullable|mimes:jpeg,png,jpg,gif|max:2048',
+        //     'ville' => 'required|exists:villes,id'
 
-        DB::beginTransaction();
+        // ]);
 
-        try {
+        // DB::beginTransaction();
+
+        // try {
             $user = new User();
-            $user->prenom = $request->prenom;
+            $user->prenom = $request->first_name;
             $user->nom = $request->last_name;
             $user->email = $request->email;
             $user->tel = $request->phone;
@@ -92,8 +105,9 @@ class doctorController extends Controller
             $user->sexe = $request->gender;
             $user->dateNaissance = $request->dateNaissance;
             $user->status_compte = 'A';
-            $user->ville = $request->ville;
+            $user->ville_id = $request->ville;
             $user->save();
+
             if ($request->hasFile('profile_picture')) {
                 $file = $request->file('profile_picture');
                 $fileName = $user->nom . '_' . $user->prenom . '.' . $file->getClientOriginalExtension();
@@ -116,15 +130,16 @@ class doctorController extends Controller
                 'user_id' => $user->id,
                 'speciality_id' => $request->speciality,
                 'prix' => $request->appointment_price,
+                'about' => ''
             ]);
 
-            DB::commit();
+            // DB::commit();
 
             return redirect()->route('admin.doctorsList')->with('success', 'Doctor added successfully!');
-        } catch (\Exception $e) {
-            DB::rollBack();
-            return redirect()->route('admin.doctorsList')->with('error', 'Failed to add doctor. Please try again.');
-        }
+        // } catch (\Exception $e) {
+        //     DB::rollBack();
+        //     return redirect()->route('admin.doctorsList')->with('error', 'Failed to add doctor. Please try again.');
+        // }
     }
 
     /**
@@ -133,12 +148,9 @@ class doctorController extends Controller
     public function show(string $id)
     {
         $doctor = Doctor::find($id);
-        $reviews = Review::where('patientId',session()->get('user')->patient->id)
-                    ->where('doctorId',$id)
-                    ->orderByDesc('created_at')
-                    ->get();
+     
         $doctorReviews =Review::where('doctorId',$id)->get();
-        return view('doctor-profile', compact('doctor','reviews','doctorReviews'));
+        return view('doctor-profile', compact('doctor','doctorReviews'));
     }
 
     /**
@@ -148,8 +160,9 @@ class doctorController extends Controller
     {
         $doctor = Doctor::find($id);
         $specialities = Speciality::all();
+        $villes = Ville::all();
 
-        return view('admin.doctor-edit', compact('doctor', 'specialities'));
+        return view('admin.doctor-edit', compact('doctor', 'specialities','villes'));
     }
 
     /**
@@ -176,7 +189,7 @@ class doctorController extends Controller
             'about' => 'nullable|string'
 
         ]);
-        try {
+        // try {
             // Find the doctor
             $doctor = Doctor::findOrFail($id);
 
@@ -191,7 +204,7 @@ class doctorController extends Controller
             $user->dateNaissance = $request->input('dateNaissance');
             $user->address = $request->input('address');
             $user->status_compte = $request->input('status');
-            $user->ville = $request->input('ville');
+            $user->ville_id = $request->input('ville');
             if($request->filled('about')){
                 $doctor->about = $request->input('about');
             }
@@ -239,18 +252,18 @@ class doctorController extends Controller
 
             // Redirect back with success message
             return redirect()->route('admin.doctorsList')->with('success', 'Doctor updated successfully.');
-        } catch (\Exception $e) {
-            // Handle exceptions
-            return redirect()->back()->with('error', 'Failed to update doctor. ' . $e->getMessage())->withInput();
-        }
+        // } catch (\Exception $e) {
+        //     // Handle exceptions
+        //     return redirect()->route()->with('error', 'Failed to update doctor. ' . $e->getMessage())->withInput();
+        // }
     }
-    public function update2(Request $request, $id)
+    public function updateInfos(Request $request, $id)
 {
     // Validate the incoming request data
     $validator = Validator::make($request->all(), [
         'first_name' => 'required|string|max:255',
         'last_name' => 'required|string|max:255',
-        'email' => 'required|email|max:255',
+        // 'email' => 'required|email|max:255',
         'phone' => 'nullable|string|max:20',
         'gender' => 'required|string|in:M,F',
         'dateNaissance' => 'required|date',
@@ -270,7 +283,7 @@ class doctorController extends Controller
     // Update the user fields
     $user->prenom = $request->input('first_name');
     $user->nom = $request->input('last_name');
-    $user->email = $request->input('email');
+    // $user->email = $request->input('email');
     $user->tel = $request->input('phone');
     $user->Sexe = $request->input('gender');
     $user->dateNaissance = $request->input('dateNaissance');
@@ -290,7 +303,7 @@ class doctorController extends Controller
     $user->save();
     $doctor->save();
 
-    return redirect()->route('admin.doctorsList')->with('success', 'Doctor information updated successfully.');
+    return redirect()->route('doctor_profileSettings')->with('success', 'Doctor information updated successfully.');
 }
     /**
      * Remove the specified resource from storage.

@@ -93,8 +93,9 @@
             <div class="container-fluid">
                 <div class="section-header text-center">
                     <h2>Clinic and Specialities</h2>
-                    <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="sub-title">Discover our comprehensive medical services and expert specialities. Choose the right care for your health needs today.
+
+                        .</p>
                 </div>
                 <div class="row justify-content-center">
                     <div class="col-md-9">
@@ -123,8 +124,7 @@
             <div class="container">
                 <div class="section-header text-center">
                     <h2>Browse by Specialities</h2>
-                    <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="sub-title">Explore our wide range of medical specialities to find the perfect doctor for your needs. Book an appointment with experts in various fields..</p>
                 </div>
                 <div class="row">
                     @foreach ($specialities as $speciality)
@@ -154,8 +154,9 @@
             <div class="container-fluid">
                 <div class="section-header text-center">
                     <h2>Book Our Best Doctor</h2>
-                    <p class="sub-title">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor
-                        incididunt ut labore et dolore magna aliqua.</p>
+                    <p class="sub-title">Our top-rated doctors are here to provide exceptional care. Schedule your appointment today and experience the highest quality medical attention.
+
+                        .</p>
                 </div>
                 <div class="row">
                     <div class="col-lg-12">
@@ -175,18 +176,16 @@
                                 }
                             @endphp
                             @foreach ($doctors as $doctor)
-                                <div class="profile-widget">
-                                    <div class="doc-img">
-                                        <a href="#">
-                                            <img class="img-fluid" alt="User Image"
+                                <div class="profile-widget" >
+                                    <div class="doc-img" style="height:200px">
+                                        <a href="{{ route('doctorProfile', $doctor->id) }}">
+                                            <img class="img-fluid"   alt="User Image"
                                                 src="{{doctorProfileImage($doctor->user->nom,$doctor->user->prenom )}}">
-                                        </a>
-                                        <a href="javascript:void(0)" class="fav-btn"> <i class="far fa-bookmark"></i>
                                         </a>
                                     </div>
                                     <div class="pro-content">
                                         <h3 class="title">
-                                            <a href="#">{{ $doctor->user->nom . ' ' . $doctor->user->prenom }}</a>
+                                            <a href="{{ route('doctorProfile', $doctor->id) }}">{{ $doctor->user->nom . ' ' . $doctor->user->prenom }}</a>
                                             <i class="fas fa-check-circle verified"></i>
                                         </h3>
                                         <p class="speciality">{{ $doctor->speciality->name }}</p>
@@ -198,11 +197,10 @@
 										<span class="d-inline-block average-rating">(17)</span>
 									</div> --}}
                                         <ul class="available-info">
-                                            <li> <i class="fas fa-map-marker-alt"></i>{{ $doctor->user->address }}
+                                            <li> <i class="fas fa-map-marker-alt"></i>{{ $doctor->user->address.', '.$doctor->user->ville->name }}
                                             </li>
                                             {{-- <li>	<i class="far fa-clock"></i> Available on Fri, 22 Mar</li> --}}
                                             <li> <i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH
-                                                <!--<i class="fas fa-info-circle" data-toggle="tooltip" title="Lorem Ipsum"></i>-->
                                             </li>
                                         </ul>
                                         <div class="row row-sm">

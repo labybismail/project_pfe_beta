@@ -30,14 +30,14 @@
             <style>
                
             </style>
-            @if (request()->is('home'))
+            {{-- @if (request()->is('home'))
                 <style>
                     header nav ul li a {
                         color: white !important;
                     }
                 </style>
-            @endif
-            <ul class="main-nav white-font">
+            @endif --}}
+            <ul class="main-nav @if(Route::currentRouteName()=='home') white-font @else black-font @endif">
 
                 @if (session()->has('user') && \App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
                     <li>

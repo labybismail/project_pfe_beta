@@ -191,7 +191,21 @@
                                                 @enderror
                                             </div>
                                             <div class="col-md-6 form-group form-focus">
-                                                <button type="submit" class="btn btn-success">Update</button>
+                                                <select name="ville" id=""
+                                                    class="form-control floating">
+                                                    @foreach ($villes as $ville)
+                                                    <option value="{{ $ville->id }}" {{ old('ville') == $ville->id||$doctor->user->ville_id==$ville->id ? 'selected' : '' }}>{{ $ville->name }}</option>
+                                                      </option>
+                                                    @endforeach
+                                                </select>
+                                                <label class="focus-label">ville</label>
+                                                @error('ville')
+                                                    <span class="text-danger">{{ $message }}</span>
+                                                @enderror
+                                                <div class="invalid-feedback"></div>
+                                            </div>
+                                            <div class="col-md-6 form-group form-focus">
+                                                <button type="submit" class="btn btn-success" style="width:285px">Update</button>
                                             </div>
                                         </div>
                                     <!-- /Edit Form -->

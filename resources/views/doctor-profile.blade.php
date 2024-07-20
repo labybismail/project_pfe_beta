@@ -37,12 +37,12 @@
 
         <!-- Header -->
 
-		
+
         <!-- /Header -->
-		
+
         <!-- Breadcrumb -->
+        @include('layouts.header')
         <div class="breadcrumb-bar">
-			@include('layouts.header')
             <div class="container-fluid">
                 <div class="row align-items-center">
                     <div class="col-md-12 col-12">
@@ -69,15 +69,17 @@
                         <div class="doctor-widget">
                             <div class="doc-info-left">
                                 <div class="doctor-img">
-                                    <img src="{{doctorProfileImage($doctor->user->nom,$doctor->user->prenom)}}" class="img-fluid"
-                                        alt="User Image">
+                                    <img src="{{ doctorProfileImage($doctor->user->nom, $doctor->user->prenom) }}"
+                                        class="img-fluid" alt="User Image">
                                 </div>
                                 <div class="doc-info-cont">
-                                    <h4 class="doc-name">Dr. {{$doctor->user->nom.' '.$doctor->user->prenom}}</h4>
+                                    <h4 class="doc-name">Dr. {{ $doctor->user->nom . ' ' . $doctor->user->prenom }}</h4>
                                     {{-- <p class="doc-speciality"></p> --}}
                                     <p class="doc-department">
-                                        <img src="{{ asset('assets/img/specialities/' . $doctor->speciality->name . '.png') }}" alt="{{ $doctor->speciality->name }}">
-                                        {{$doctor->speciality->name}}</p>
+                                        <img src="{{ asset('assets/img/specialities/' . $doctor->speciality->name . '.png') }}"
+                                            alt="{{ $doctor->speciality->name }}">
+                                        {{ $doctor->speciality->name }}
+                                    </p>
                                     <div class="rating">
                                         <i class="fas fa-star filled"></i>
                                         <i class="fas fa-star filled"></i>
@@ -90,31 +92,40 @@
                                         <p class="doc-location">
                                             <i class="fas fa-map-marker-alt"></i> {{ $doctor->user->address }}
                                         </p>
-                                       
-                                    </div> 
+
+                                    </div>
                                 </div>
                             </div>
                             <div class="doc-info-right">
                                 <div class="clini-infos">
                                     <ul>
-                                        <li><i class="far fa-thumbs-up"></i> {{ ($doctorReviews->where('rating','>',2)->count()/$doctorReviews->count())*100 }}%</li>
-                                        <li><i class="far fa-comment"></i> {{$doctorReviews->count()}} Feedback</li>
-                                        <li><i class="fas fa-map-marker-alt"></i>{{ $doctor->user->ville->name }},Casablanca</li>
-                                        <li><i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH per appointment</li>
+                                        <li>
+                                            @if($doctorReviews->count()!=0)
+
+                                            <i class="far fa-thumbs-up"></i>
+                                            {{ (int) (($doctorReviews->where('rating', '>', 2)->count() / $doctorReviews->count()) * 100).'%' }}
+                                            @endif
+                                        </li>
+                                        <li><i class="far fa-comment"></i> {{ $doctorReviews->count() }} Feedback</li>
+                                        <li><i
+                                                class="fas fa-map-marker-alt"></i>{{ $doctor->user->ville->name }}, Casablanca
+                                        </li>
+                                        <li><i class="far fa-money-bill-alt"></i>{{ $doctor->prix }} DH per appointment
+                                        </li>
                                     </ul>
                                 </div>
-                               
+
                                 @if (session()->has('user') &&
-                                    !App\Models\Admin::where('user_id', session()->get('user')->id)->exists() &&
-                                    !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
-                                               
-                                <div class="clinic-booking">
-                                    <form action="{{route('bookingPage')}}" method="post">
-                                        @csrf 
-                                        <input type="hidden" name="doctorID" value="{{$doctor->id}}">
-                                        <button type="submit" class="apt-btn btn btn-primary btn-md">Book Appointment</button >
-                                    </form>
-                                </div>
+                                        !App\Models\Admin::where('user_id', session()->get('user')->id)->exists() &&
+                                        !App\Models\Doctor::where('user_id', session()->get('user')->id)->exists())
+                                    <div class="clinic-booking">
+                                        <form action="{{ route('bookingPage') }}" method="post">
+                                            @csrf
+                                            <input type="hidden" name="doctorID" value="{{ $doctor->id }}">
+                                            <button type="submit" class="apt-btn btn btn-primary btn-md">Book
+                                                Appointment</button>
+                                        </form>
+                                    </div>
                                 @endif
                             </div>
                         </div>
@@ -131,10 +142,10 @@
                             <ul class="nav nav-tabs nav-tabs-bottom nav-justified">
                                 <li class="nav-item">
                                     <a class="nav-link active" href="#doc_overview" data-toggle="tab">Overview</a>
-                                </li> 
+                                </li>
                                 <li class="nav-item">
                                     <a class="nav-link" href="#doc_reviews" data-toggle="tab">Reviews</a>
-                                </li> 
+                                </li>
                             </ul>
                         </nav>
                         <!-- /Tab Menu -->
@@ -150,15 +161,14 @@
                                         <!-- About Details -->
                                         <div class="widget about-widget">
                                             <h4 class="widget-title">About Me</h4>
-                                            <p>{{$doctor->about}}</p>
+                                            <p>{{ $doctor->about }}</p>
                                         </div>
-                                        
+
                                     </div>
                                 </div>
                             </div>
                             <!-- /Overview Content -->
 
-                         
 
                             <!-- Reviews Content -->
                             <div role="tabpanel" id="doc_reviews" class="tab-pane fade">
@@ -168,63 +178,93 @@
                                     <ul class="comments-list">
 
                                         <!-- Comment List -->
+                                        @php
+                                            // if(session()->has('user')){
 
-                                        @foreach($reviews as $review)
-                                        <li>
-                                            <div class="comment">
-                                                <img class="avatar avatar-sm rounded-circle" alt="User Image"
-                                                    src="{{patientProfileImage($review->patient->user->nom,$review->patient->user->prenom)}}">
-                                                <div class="comment-body">
-                                                    <div class="meta-data">
-                                                        <span class="comment-author">{{$review->patient->user->nom.' '.$review->patient->user->prenom}}</span>
-                                                        @php
-                                                           $diffDays=  (int)Carbon\Carbon::parse($review->created_at)->diffInDays(Carbon\Carbon::today());
-                                                        @endphp
-                                                        <span class="comment-date">Reviewed {{ $diffDays==0 ?' Today': $diffDays.' Days ago' }} </span>
-                                                        <div class="review-count rating">
-                                                            <i class="fas fa-star @if($review->rating>=1) filled @endif"></i>
-                                                            <i class="fas fa-star @if($review->rating>=2) filled @endif"></i>
-                                                            <i class="fas fa-star @if($review->rating>=3) filled @endif"></i>
-                                                            <i class="fas fa-star @if($review->rating>=4) filled @endif"></i>
-                                                            <i class="fas fa-star @if($review->rating>=5) filled @endif"></i>
+                                            // $reviews = App\Models\Review::where(
+                                            //     'patientId',
+                                            //     session()->get('user')->patient->id,
+                                            // )
+                                            //     ->where('doctorId', $doctor->id)
+                                            //     ->orderByDesc('created_at')
+                                            //     ->get();
+                                            // }else{
+                                            //     $reviews = App\Models\Review::where('doctorId', $doctor->id)
+                                            //     ->orderByDesc('created_at')
+                                            //     ->get();
+                                            // }
+                                        @endphp
+                                        @foreach ($doctorReviews as $review)
+                                            <li>
+                                                <div class="comment">
+                                                    <img class="avatar avatar-sm rounded-circle" alt="User Image"
+                                                        src="{{ patientProfileImage($review->patient->user->nom, $review->patient->user->prenom) }}">
+                                                    <div class="comment-body">
+                                                        <div class="meta-data">
+                                                            <span
+                                                                class="comment-author">{{ $review->patient->user->nom . ' ' . $review->patient->user->prenom }}</span>
+                                                            @php
+                                                                $diffDays = (int) Carbon\Carbon::parse(
+                                                                    $review->created_at,
+                                                                )->diffInDays(Carbon\Carbon::today());
+                                                            @endphp
+                                                            <span class="comment-date">Reviewed
+                                                                {{ $diffDays == 0 ? ' Today' : $diffDays . ' Days ago' }}
+                                                            </span>
+                                                            <div class="review-count rating">
+                                                                <i
+                                                                    class="fas fa-star @if ($review->rating >= 1) filled @endif"></i>
+                                                                <i
+                                                                    class="fas fa-star @if ($review->rating >= 2) filled @endif"></i>
+                                                                <i
+                                                                    class="fas fa-star @if ($review->rating >= 3) filled @endif"></i>
+                                                                <i
+                                                                    class="fas fa-star @if ($review->rating >= 4) filled @endif"></i>
+                                                                <i
+                                                                    class="fas fa-star @if ($review->rating >= 5) filled @endif"></i>
+                                                            </div>
                                                         </div>
-                                                    </div>
-                                                    <p class="@if($review->recomended==true) text-success @else text-danger @endif">
-                                                        @if($review->recomended==true)
-                                                            <i class="far fa-thumbs-up"></i> I recommend the doctor
-                                                        @elseif($review->recomended==false)
-                                                            <i class="far fa-thumbs-down"></i> I don't recommend the doctor
-                                                        @endif
-                                                    </p>
-                                                    <p class="comment-content">
-                                                        {{$review->comment}}
-                                                    </p>
-                                                    
-                                                </div>
-                                            </div>
- 
+                                                        <p
+                                                            class="@if ($review->recomended == true) text-success @else text-danger @endif">
+                                                            @if ($review->recomended == true)
+                                                                <i class="far fa-thumbs-up"></i> I recommend the doctor
+                                                            @elseif($review->recomended == false)
+                                                                <i class="far fa-thumbs-down"></i> I don't recommend
+                                                                the doctor
+                                                            @endif
+                                                        </p>
+                                                        <p class="comment-content">
+                                                            {{ $review->comment }}
+                                                        </p>
 
-                                        </li>
+                                                    </div>
+                                                </div>
+
+
+                                            </li>
                                         @endforeach
                                         <!-- /Comment List -->
- 
+
 
                                     </ul>
 
-                                     
+
                                 </div>
                                 <!-- /Review Listing -->
+                                @if(session()->has('user'))
 
                                 <!-- Write Review -->
                                 <div class="write-review">
-                                    <h4>Write a review for <strong>Dr. {{$doctor->user->nom.' '.$doctor->user->prenom}}</strong></h4>
+                                    <h4>Write a review for <strong>Dr.
+                                            {{ $doctor->user->nom . ' ' . $doctor->user->prenom }}</strong></h4>
 
                                     <!-- Write Review Form -->
-                                    <form action="{{route('review.store')}}" method="POST">
+                                    <form action="{{ route('review.store') }}" method="POST">
                                         @csrf
                                         <div class="form-group">
-                                            <input type="hidden" name="patientId" value="{{ session()->get('user')->patient->id }}">
-                                            <input type="hidden" name="doctorId" value="{{$doctor->id}}">
+                                            <input type="hidden" name="patientId"
+                                                value="{{ session()->get('user')->patient->id }}">
+                                            <input type="hidden" name="doctorId" value="{{ $doctor->id }}">
                                             <label>Review</label>
                                             <div class="star-rating">
                                                 <input id="star-5" type="radio" name="rating" value="5">
@@ -258,35 +298,35 @@
                                                     remaining</small></div>
                                         </div>
                                         <hr>
-                                      
-                                        </div>
-                                        <div class="submit-section">
-                                            <button type="submit" class="btn btn-primary submit-btn">Add
-                                                Review</button>
-                                        </div>
-                                    </form>
-                                    <!-- /Write Review Form -->
 
                                 </div>
-                                <!-- /Write Review -->
+                                <div class="submit-section">
+                                    <button type="submit" class="btn btn-primary submit-btn">Add
+                                        Review</button>
+                                </div>
+                                </form>
+                                <!-- /Write Review Form -->
 
                             </div>
-                            <!-- /Reviews Content -->
- 
-
+                            <!-- /Write Review -->
+                            @endif
                         </div>
+                        <!-- /Reviews Content -->
+
+
                     </div>
                 </div>
-                <!-- /Doctor Details Tab -->
-
             </div>
+            <!-- /Doctor Details Tab -->
+
         </div>
-        <!-- /Page Content -->
+    </div>
+    <!-- /Page Content -->
 
-        <!-- Footer -->
-		@include('layouts.footer')
+    <!-- Footer -->
+    @include('layouts.footer')
 
-        <!-- /Footer -->
+    <!-- /Footer -->
 
     </div>
     <!-- /Main Wrapper -->

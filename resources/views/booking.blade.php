@@ -396,7 +396,7 @@
 
                         <!-- Submit Section -->
                         <div class="submit-section proceed-btn text-right">
-                            <button type="submit" class="btn btn-primary submit-btn">Proceed to Pay</button>
+                            <button type="submit" class="btn btn-primary submit-btn">Book</button>
                         </div>
                         </form>
 

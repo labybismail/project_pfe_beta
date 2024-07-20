@@ -82,7 +82,7 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-
+                                                @include('functions')
                                                 @foreach ($patients as $patient)
                                                     <tr>
                                                         <td>{{ $patient->id }}</td>
@@ -91,7 +91,7 @@
                                                             <h2 class="table-avatar">
                                                                 <a class="avatar avatar-sm mr-2"><img
                                                                         class="avatar-img rounded-circle"
-                                                                        src="assets/img/patients/patient1.jpg"
+                                                                        src="{{patientProfileImage($patient->user->nom, $patient->user->prenom)}}"
                                                                         alt="User Image"></a>
                                                                 {{ $patient->user->nom . ' ' . $patient->user->prenom }}
                                                             </h2>

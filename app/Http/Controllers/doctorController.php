@@ -106,7 +106,7 @@ class doctorController extends Controller
             $user->dateNaissance = $request->dateNaissance;
             $user->status_compte = 'A';
             $user->ville_id = $request->ville;
-            $user->save();
+            //$user->save();
 
             if ($request->hasFile('profile_picture')) {
                 $file = $request->file('profile_picture');

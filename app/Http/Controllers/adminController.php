@@ -51,25 +51,25 @@ class adminController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        $request->validate([
-            'prenom' => 'required|string|max:255',
-            'nom' => 'required|string|max:255',
-            'dateNaissance' => 'required|date|before:today',
-            'email' => 'required|email|max:255',
-            'tel' => 'required|string|max:15',
-            'address' => 'required|string|max:255',
-            'ville' => 'required|exists:villes,id',
-            'password' => 'nullable|string|min:8|confirmed',
+    //     $request->validate([
+    //         'prenom' => 'required|string|max:255',
+    //         'nom' => 'required|string|max:255',
+    //         'email' => 'required|email|max:255',
+    //         'dateNaissance' => 'required|date|before:today',
+    //         'tel' => 'required|string|max:15',
+    //         'address' => 'required|string|max:255',
+    //         'ville' => 'required|exists:villes,id',
+    //         'password' => 'nullable|string|min:8|confirmed',
 
-        ]);
-    
+    //     ]);
+    // dd();
         $admin = Admin::findOrFail($id);
         $user = $admin->user;
     
         $user->prenom = $request->input('prenom');
         $user->nom = $request->input('nom');
         $user->dateNaissance = \Carbon\Carbon::createFromFormat('d/m/Y', $request->input('dateNaissance'))->format('Y-m-d');
-        $user->email = $request->input('email');
+        // $user->email = $request->input('email');
         $user->tel = $request->input('tel');
         $user->address = $request->input('address');
         $user->ville_id = $request->input('ville');

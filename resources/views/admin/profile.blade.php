@@ -139,7 +139,7 @@
 														<div class="col-12 col-md-6">
 															<div class="form-group">
 																<label>Email</label>
-																<input type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}">
+																<input disabled type="email" class="form-control" name="email" value="{{ old('email', $user->email) }}">
 																@error('email')
 																	<span class="text-danger">{{ $message }}</span>
 																@enderror

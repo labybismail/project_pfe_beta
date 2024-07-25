@@ -179,7 +179,7 @@ class doctorController extends Controller
             'email' => 'required|string|email|max:255',
             'phone' => 'required|string|max:20',
             'dateNaissance' => 'required|date',
-            'password' => 'nullable|string|min:8|confirmed',
+            'password' => 'nullable|string|min:8',
             'address' => 'required|string|max:255',
             'speciality' => 'required|exists:specialities,id',
             'appointment_price' => 'required|numeric|min:0',

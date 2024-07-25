@@ -103,7 +103,7 @@
                                                                 );
                                                                 $age = $dateOfBirth->diffInYears( Carbon\Carbon::now());
 
-                                                                echo $age;
+                                                                echo (int)$age;
                                                             @endphp
                                                         </td>
 

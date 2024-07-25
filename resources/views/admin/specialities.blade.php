@@ -109,13 +109,13 @@
 
                                                     <td class="text-right">
                                                         <div class="actions">
-                                                            <a class="btn btn-sm bg-success-light" data-toggle="modal"
+                                                            {{-- <a class="btn btn-sm bg-success-light" data-toggle="modal"
                                                                 href="#edit_specialities_details"
                                                                 data-id="{{ $speciality->id }}"
                                                                 data-name="{{ $speciality->name }}"
                                                                 onclick="getEditFields({{ $speciality->id }})">
                                                                 <i class="fe fe-pencil"></i> Edit
-                                                            </a>
+                                                            </a> --}}
                                                             <a data-toggle="modal"
                                                                 onclick="if(!confirm('Are you sure you want to delete this speciality?')){return false;}else{$('#formDelete{{ $speciality->id }}').submit()}"
                                                                 class="btn btn-sm bg-danger-light">
